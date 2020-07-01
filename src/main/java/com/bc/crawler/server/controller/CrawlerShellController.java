@@ -15,7 +15,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.xml.ws.Response;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -107,6 +107,16 @@ public class CrawlerShellController {
             CrawlerShell crawlerShell = crawlerShellService.getCrawlerShellByServiceType(serviceType);
             if (null != crawlerShell) {
                 logger.info("[executeCrawlerShell], path: " + crawlerShell.getPath());
+
+                // 检查脚本文件是否存在
+                File shellFile = new File(crawlerShell.getPath());
+                if (!shellFile.exists()){
+                    MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+                    headers.add("responseCode", ResponseMsg.CRAWLER_SHELL_NOT_EXISTS.getResponseCode());
+                    headers.add("responseMessage", ResponseMsg.CRAWLER_SHELL_NOT_EXISTS.getResponseMessage());
+                    return new ResponseEntity<>(ResponseMsg.EXECUTE_CRAWLER_ERROR.getResponseCode(), headers, HttpStatus.BAD_REQUEST);
+                }
+
                 Process ps = Runtime.getRuntime().exec(crawlerShell.getPath());
                 ps.waitFor();
             }
