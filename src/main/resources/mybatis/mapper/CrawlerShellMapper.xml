@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bc.crawler.server.mapper.CrawlerShellMapper">
+    <resultMap id="crawlerShell" type="com.bc.crawler.server.entity.CrawlerShell">
+        <id column="shell_id" property="id" jdbcType="VARCHAR"/>
+        <result column="shell_service_type" property="serviceType" jdbcType="VARCHAR"/>
+        <result column="shell_path" property="path" jdbcType="VARCHAR"/>
+        <result column="shell_create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="shell_modify_time" property="modifyTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getCrawlerShellByServiceType" resultMap="crawlerShell" parameterType="String">
+        select *
+        from t_crawler_shell
+        where shell_service_type = #{serviceType}
+    </select>
+</mapper>
