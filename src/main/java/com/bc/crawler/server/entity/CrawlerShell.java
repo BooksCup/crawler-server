@@ -3,6 +3,8 @@ package com.bc.crawler.server.entity;
 
 /**
  * 爬虫脚本
+ *
+ * @author zhou
  */
 public class CrawlerShell {
 
