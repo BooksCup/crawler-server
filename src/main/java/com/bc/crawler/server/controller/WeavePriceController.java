@@ -33,12 +33,17 @@ public class WeavePriceController {
     @ApiOperation(value = "获取纺织品价格分页信息", notes = "获取纺织品价格分页信息")
     @GetMapping(value = "")
     public ResponseEntity<PageInfo<WeavePrice>> getWeavePricePageInfo(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String date,
             @RequestParam(required = false, defaultValue = "1") Integer page,
             @RequestParam(required = false, defaultValue = "10") Integer limit) {
-        logger.info("[getWeavePricePageInfo], page: " + page + ", limit: " + limit);
+        logger.info("[getWeavePricePageInfo], page: " + page + ", limit: " + limit + ", name: " + name
+                + ", date: " + date);
         ResponseEntity<PageInfo<WeavePrice>> responseEntity;
         try {
             Map<String, String> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
+            paramMap.put("name", name);
+            paramMap.put("date", date);
             PageInfo<WeavePrice> weavePricePageInfo = weavePriceService.getWeavePricePageInfo(page, limit, paramMap);
             responseEntity = new ResponseEntity<>(weavePricePageInfo, HttpStatus.OK);
         } catch (Exception e) {

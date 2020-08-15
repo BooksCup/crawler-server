@@ -15,5 +15,13 @@
     <select id="getWeavePriceList" resultMap="weavePrice" parameterType="map">
         select *
         from t_weave_price
+        where 1 = 1
+        <if test="name != null and name != ''">
+            and price_name like "%"#{name}"%"
+        </if>
+        <if test="date != null and date != ''">
+            and price_date = #{date}
+        </if>
+        order by price_date desc
     </select>
 </mapper>
