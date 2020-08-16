@@ -9,6 +9,11 @@
         <result column="shell_modify_time" property="modifyTime" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <select id="getCrawlerShellList" resultMap="crawlerShell" parameterType="map">
+        select *
+        from t_crawler_shell
+    </select>
+
     <select id="getCrawlerShellByServiceType" resultMap="crawlerShell" parameterType="String">
         select *
         from t_crawler_shell

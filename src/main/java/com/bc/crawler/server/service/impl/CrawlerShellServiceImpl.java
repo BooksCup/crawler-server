@@ -3,9 +3,13 @@ package com.bc.crawler.server.service.impl;
 import com.bc.crawler.server.entity.CrawlerShell;
 import com.bc.crawler.server.mapper.CrawlerShellMapper;
 import com.bc.crawler.server.service.CrawlerShellService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 爬虫脚本
@@ -27,5 +31,20 @@ public class CrawlerShellServiceImpl implements CrawlerShellService {
     @Override
     public CrawlerShell getCrawlerShellByServiceType(String serviceType) {
         return crawlerShellMapper.getCrawlerShellByServiceType(serviceType);
+    }
+
+    /**
+     * 获取爬虫脚本分页信息
+     *
+     * @param pageNum  当前分页数
+     * @param pageSize 分页大小
+     * @param paramMap 参数map
+     * @return 获取爬虫脚本列表
+     */
+    @Override
+    public PageInfo<CrawlerShell> getCrawlerShellPageInfo(int pageNum, int pageSize, Map<String, String> paramMap) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<CrawlerShell> crawlerShellList = crawlerShellMapper.getCrawlerShellList(paramMap);
+        return new PageInfo<>(crawlerShellList);
     }
 }
