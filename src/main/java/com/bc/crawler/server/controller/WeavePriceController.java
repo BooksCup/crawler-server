@@ -12,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,19 +32,51 @@ public class WeavePriceController {
     @Resource
     WeavePriceService weavePriceService;
 
+    /**
+     * 获取纺织品类型列表
+     *
+     * @return 纺织品类型列表
+     */
+    @ApiOperation(value = "获取纺织品类型列表", notes = "获取纺织品类型列表")
+    @GetMapping(value = "/type")
+    public ResponseEntity<List<String>> getWeaveTypeList() {
+        logger.info("[getWeaveTypeList]");
+        ResponseEntity<List<String>> responseEntity;
+        try {
+            List<String> weaveTypeList = weavePriceService.getWeaveTypeList();
+            responseEntity = new ResponseEntity<>(weaveTypeList, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseEntity = new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseEntity;
+    }
+
+    /**
+     * 获取纺织品价格分页信息
+     *
+     * @param name  名称
+     * @param type  类型
+     * @param date  报价日期
+     * @param page  当前分页数
+     * @param limit 分页大小
+     * @return 纺织品价格分页信息
+     */
     @ApiOperation(value = "获取纺织品价格分页信息", notes = "获取纺织品价格分页信息")
     @GetMapping(value = "")
     public ResponseEntity<PageInfo<WeavePrice>> getWeavePricePageInfo(
             @RequestParam(required = false) String name,
+            @RequestParam(required = false) String type,
             @RequestParam(required = false) String date,
             @RequestParam(required = false, defaultValue = "1") Integer page,
             @RequestParam(required = false, defaultValue = "10") Integer limit) {
         logger.info("[getWeavePricePageInfo], page: " + page + ", limit: " + limit + ", name: " + name
-                + ", date: " + date);
+                + ", type: " + type + ", date: " + date);
         ResponseEntity<PageInfo<WeavePrice>> responseEntity;
         try {
             Map<String, String> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
             paramMap.put("name", name);
+            paramMap.put("type", type);
             paramMap.put("date", date);
             PageInfo<WeavePrice> weavePricePageInfo = weavePriceService.getWeavePricePageInfo(page, limit, paramMap);
             responseEntity = new ResponseEntity<>(weavePricePageInfo, HttpStatus.OK);

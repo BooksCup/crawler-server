@@ -3,6 +3,7 @@ package com.bc.crawler.server.service;
 import com.bc.crawler.server.entity.WeavePrice;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,6 +12,13 @@ import java.util.Map;
  * @author zhou
  */
 public interface WeavePriceService {
+
+    /**
+     * 获取纺织品类型列表
+     *
+     * @return 纺织品类型列表
+     */
+    List<String> getWeaveTypeList();
 
     /**
      * 获取纺织品价格分页信息

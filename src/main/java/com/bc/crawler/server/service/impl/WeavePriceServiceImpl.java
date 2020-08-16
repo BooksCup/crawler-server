@@ -23,6 +23,16 @@ public class WeavePriceServiceImpl implements WeavePriceService {
     private WeavePriceMapper weavePriceMapper;
 
     /**
+     * 获取纺织品类型列表
+     *
+     * @return 纺织品类型列表
+     */
+    @Override
+    public List<String> getWeaveTypeList() {
+        return weavePriceMapper.getWeaveTypeList();
+    }
+
+    /**
      * 获取纺织品价格分页信息
      *
      * @param pageNum  当前分页数

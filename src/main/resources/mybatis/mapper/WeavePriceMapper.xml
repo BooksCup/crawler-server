@@ -12,12 +12,20 @@
         <result column="price_create_time" property="createTime" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <select id="getWeaveTypeList" resultType="String">
+        select distinct price_type
+        from t_weave_price
+    </select>
+
     <select id="getWeavePriceList" resultMap="weavePrice" parameterType="map">
         select *
         from t_weave_price
         where 1 = 1
         <if test="name != null and name != ''">
             and price_name like "%"#{name}"%"
+        </if>
+        <if test="type != null and type != ''">
+            and price_type = #{type}
         </if>
         <if test="date != null and date != ''">
             and price_date = #{date}

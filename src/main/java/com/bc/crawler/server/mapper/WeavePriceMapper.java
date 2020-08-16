@@ -11,6 +11,14 @@ import java.util.Map;
  * @author zhou
  */
 public interface WeavePriceMapper {
+
+    /**
+     * 获取纺织品类型列表
+     *
+     * @return 纺织品类型列表
+     */
+    List<String> getWeaveTypeList();
+
     /**
      * 获取纺织品价格列表
      *
