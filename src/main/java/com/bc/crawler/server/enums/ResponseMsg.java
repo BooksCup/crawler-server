@@ -9,6 +9,8 @@ public enum ResponseMsg {
     /**
      * crawler-server接口返回信息
      */
+    CRAWLER_SHELL_EXISTS("CRAWLER_SHELL_EXISTS", "爬虫脚本已存在"),
+
     EXECUTE_CRAWLER_SUCCESS("EXECUTE_CRAWLER_SUCCESS", "执行爬虫脚本成功"),
     EXECUTE_CRAWLER_ERROR("EXECUTE_CRAWLER_ERROR", "执行爬虫脚本失败"),
     ;

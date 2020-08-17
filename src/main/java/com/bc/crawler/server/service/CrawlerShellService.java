@@ -11,6 +11,7 @@ import java.util.Map;
  * @author zhou
  */
 public interface CrawlerShellService {
+
     /**
      * 根据业务类型获取爬虫脚本
      *
@@ -18,6 +19,20 @@ public interface CrawlerShellService {
      * @return 爬虫脚本
      */
     CrawlerShell getCrawlerShellByServiceType(String serviceType);
+
+    /**
+     * 保存爬虫脚本
+     *
+     * @param crawlerShell 爬虫脚本
+     */
+    void addCrawlerShell(CrawlerShell crawlerShell);
+
+    /**
+     * 修改爬虫脚本
+     *
+     * @param crawlerShell 爬虫脚本
+     */
+    void updateCrawlerShell(CrawlerShell crawlerShell);
 
     /**
      * 获取爬虫脚本分页信息

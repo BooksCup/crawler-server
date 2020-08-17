@@ -34,6 +34,26 @@ public class CrawlerShellServiceImpl implements CrawlerShellService {
     }
 
     /**
+     * 保存爬虫脚本
+     *
+     * @param crawlerShell 爬虫脚本
+     */
+    @Override
+    public void addCrawlerShell(CrawlerShell crawlerShell) {
+        crawlerShellMapper.addCrawlerShell(crawlerShell);
+    }
+
+    /**
+     * 修改爬虫脚本
+     *
+     * @param crawlerShell 爬虫脚本
+     */
+    @Override
+    public void updateCrawlerShell(CrawlerShell crawlerShell) {
+        crawlerShellMapper.updateCrawlerShell(crawlerShell);
+    }
+
+    /**
      * 获取爬虫脚本分页信息
      *
      * @param pageNum  当前分页数

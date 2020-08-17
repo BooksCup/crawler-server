@@ -19,4 +19,30 @@
         from t_crawler_shell
         where shell_service_type = #{serviceType}
     </select>
+
+    <insert id="addCrawlerShell" parameterType="com.bc.crawler.server.entity.CrawlerShell">
+        insert into t_crawler_shell
+        (
+        shell_id,
+        shell_service_type,
+        shell_path,
+        shell_create_time,
+        shell_modify_time
+        )
+        values
+        (
+        #{id},
+        #{serviceType},
+        #{path},
+        now(),
+        now()
+        )
+    </insert>
+
+    <update id="updateCrawlerShell" parameterType="com.bc.crawler.server.entity.CrawlerShell">
+        update t_crawler_shell
+        set shell_path = #{path},
+        shell_modify_time = now()
+        where shell_id = #{id}
+    </update>
 </mapper>

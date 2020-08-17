@@ -21,6 +21,20 @@ public interface CrawlerShellMapper {
     CrawlerShell getCrawlerShellByServiceType(String serviceType);
 
     /**
+     * 保存爬虫脚本
+     *
+     * @param crawlerShell 爬虫脚本
+     */
+    void addCrawlerShell(CrawlerShell crawlerShell);
+
+    /**
+     * 修改爬虫脚本
+     *
+     * @param crawlerShell 爬虫脚本
+     */
+    void updateCrawlerShell(CrawlerShell crawlerShell);
+
+    /**
      * 获取爬虫脚本列表
      *
      * @param paramMap 参数map

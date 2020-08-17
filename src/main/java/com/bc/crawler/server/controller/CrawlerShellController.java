@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -21,7 +23,7 @@ import java.util.Map;
  *
  * @author zhou
  */
-@CrossOrigin
+@CrossOrigin(exposedHeaders = "responseCode")
 @RestController
 @RequestMapping("/crawlerShell")
 public class CrawlerShellController {
@@ -52,6 +54,39 @@ public class CrawlerShellController {
         } catch (Exception e) {
             e.printStackTrace();
             responseEntity = new ResponseEntity<>(new PageInfo<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseEntity;
+    }
+
+    /**
+     * 新增爬虫脚本
+     *
+     * @param serviceType 爬虫业务类型
+     * @param path        爬虫脚本路径
+     * @return ResponseEntity<String>
+     */
+    @ApiOperation(value = "新增爬虫脚本", notes = "新增爬虫脚本")
+    @PostMapping(value = "")
+    public ResponseEntity<CrawlerShell> createCrawlerShell(
+            @RequestParam String serviceType, @RequestParam String path) {
+        logger.info("[createCrawlerShell], serviceType: " + serviceType + ", path: " + path);
+        ResponseEntity<CrawlerShell> responseEntity;
+        try {
+            CrawlerShell checkExistCrawlerShell = crawlerShellService.getCrawlerShellByServiceType(serviceType);
+            if (null != checkExistCrawlerShell) {
+                MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+                headers.add("responseCode", ResponseMsg.CRAWLER_SHELL_EXISTS.getResponseCode());
+                // responseMessage会乱码，待解决
+                headers.add("responseMessage", ResponseMsg.CRAWLER_SHELL_EXISTS.getResponseMessage());
+                return new ResponseEntity<>(new CrawlerShell(), headers, HttpStatus.BAD_REQUEST);
+            }
+            CrawlerShell crawlerShell = new CrawlerShell(serviceType, path);
+            crawlerShellService.addCrawlerShell(crawlerShell);
+            responseEntity = new ResponseEntity<>(
+                    crawlerShell, HttpStatus.OK);
+        } catch (Exception e) {
+            responseEntity = new ResponseEntity<>(
+                    new CrawlerShell(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return responseEntity;
     }

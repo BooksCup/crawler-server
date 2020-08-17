@@ -1,6 +1,8 @@
 package com.bc.crawler.server.entity;
 
 
+import com.bc.crawler.server.utils.CommonUtil;
+
 /**
  * 爬虫脚本
  *
@@ -13,6 +15,16 @@ public class CrawlerShell {
     private String path;
     private String createTime;
     private String modifyTime;
+
+    public CrawlerShell() {
+
+    }
+
+    public CrawlerShell(String serviceType, String path) {
+        this.id = CommonUtil.generateId();
+        this.serviceType = serviceType;
+        this.path = path;
+    }
 
     public String getId() {
         return id;
