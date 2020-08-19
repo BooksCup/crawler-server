@@ -15,6 +15,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.xml.ws.Response;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -114,6 +115,27 @@ public class CrawlerShellController {
             e.printStackTrace();
             logger.error("[executeCrawlerShell] error, msg: " + e.getMessage());
             responseEntity = new ResponseEntity<>(ResponseMsg.EXECUTE_CRAWLER_ERROR.getResponseCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseEntity;
+    }
+
+    /**
+     * 删除爬虫脚本
+     *
+     * @param shellId 脚本ID
+     * @return ResponseEntity<String>
+     */
+    @ApiOperation(value = "删除爬虫脚本", notes = "删除爬虫脚本")
+    @DeleteMapping(value = "/{shellId}")
+    public ResponseEntity<String> deleteCrawlerShell(@PathVariable String shellId) {
+        logger.info("[deleteCrawlerShell] shellId: " + shellId);
+        ResponseEntity<String> responseEntity;
+        try {
+            crawlerShellService.deleteCrawlerShell(shellId);
+            responseEntity = new ResponseEntity<>(ResponseMsg.DELETE_CRAWLER_SUCCESS.getResponseCode(), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("[deleteCrawlerShell] error, msg: " + e.getMessage());
+            responseEntity = new ResponseEntity<>(ResponseMsg.DELETE_CRAWLER_ERROR.getResponseCode(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return responseEntity;
     }

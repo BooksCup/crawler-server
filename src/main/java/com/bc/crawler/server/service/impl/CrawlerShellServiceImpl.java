@@ -54,6 +54,16 @@ public class CrawlerShellServiceImpl implements CrawlerShellService {
     }
 
     /**
+     * 删除爬虫脚本
+     *
+     * @param shellId 脚本ID
+     */
+    @Override
+    public void deleteCrawlerShell(String shellId) {
+        crawlerShellMapper.deleteCrawlerShell(shellId);
+    }
+
+    /**
      * 获取爬虫脚本分页信息
      *
      * @param pageNum  当前分页数

@@ -35,6 +35,13 @@ public interface CrawlerShellMapper {
     void updateCrawlerShell(CrawlerShell crawlerShell);
 
     /**
+     * 删除爬虫脚本
+     *
+     * @param shellId 脚本ID
+     */
+    void deleteCrawlerShell(String shellId);
+
+    /**
      * 获取爬虫脚本列表
      *
      * @param paramMap 参数map

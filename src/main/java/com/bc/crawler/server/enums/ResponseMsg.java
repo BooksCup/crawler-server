@@ -13,6 +13,9 @@ public enum ResponseMsg {
 
     EXECUTE_CRAWLER_SUCCESS("EXECUTE_CRAWLER_SUCCESS", "执行爬虫脚本成功"),
     EXECUTE_CRAWLER_ERROR("EXECUTE_CRAWLER_ERROR", "执行爬虫脚本失败"),
+
+    DELETE_CRAWLER_SUCCESS("DELETE_CRAWLER_SUCCESS", "删除爬虫脚本成功"),
+    DELETE_CRAWLER_ERROR("DELETE_CRAWLER_ERROR", "删除爬虫脚本失败"),
     ;
 
     ResponseMsg(String responseCode, String responseMessage) {

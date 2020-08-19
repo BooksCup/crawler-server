@@ -45,4 +45,9 @@
         shell_modify_time = now()
         where shell_id = #{id}
     </update>
+
+    <delete id="deleteCrawlerShell" parameterType="String">
+        delete from t_crawler_shell
+        where shell_id = #{shellId}
+    </delete>
 </mapper>

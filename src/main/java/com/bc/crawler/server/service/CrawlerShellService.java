@@ -35,6 +35,13 @@ public interface CrawlerShellService {
     void updateCrawlerShell(CrawlerShell crawlerShell);
 
     /**
+     * 删除爬虫脚本
+     *
+     * @param shellId 脚本ID
+     */
+    void deleteCrawlerShell(String shellId);
+
+    /**
      * 获取爬虫脚本分页信息
      *
      * @param pageNum  当前分页数
