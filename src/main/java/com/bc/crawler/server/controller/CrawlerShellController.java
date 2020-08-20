@@ -93,6 +93,34 @@ public class CrawlerShellController {
     }
 
     /**
+     * 修改爬虫脚本
+     *
+     * @param shellId 爬虫脚本ID
+     * @param path    爬虫脚本路径
+     * @return ResponseEntity<String>
+     */
+    @ApiOperation(value = "修改爬虫脚本", notes = "修改爬虫脚本")
+    @PutMapping(value = "/{shellId}")
+    public ResponseEntity<String> updateCrawlerShell(
+            @PathVariable String shellId,
+            @RequestParam String path) {
+        logger.info("[updateCrawlerShell], shellId: " + shellId + ", path: " + path);
+        ResponseEntity<String> responseEntity;
+        try {
+            CrawlerShell crawlerShell = new CrawlerShell();
+            crawlerShell.setId(shellId);
+            crawlerShell.setPath(path);
+            crawlerShellService.updateCrawlerShell(crawlerShell);
+            responseEntity = new ResponseEntity<>(
+                    ResponseMsg.UPDATE_CRAWLER_SUCCESS.getResponseCode(), HttpStatus.OK);
+        } catch (Exception e) {
+            responseEntity = new ResponseEntity<>(
+                    ResponseMsg.UPDATE_CRAWLER_ERROR.getResponseCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseEntity;
+    }
+
+    /**
      * 执行爬虫脚本
      *
      * @return ResponseEntity<String>
@@ -110,7 +138,7 @@ public class CrawlerShellController {
 
                 // 检查脚本文件是否存在
                 File shellFile = new File(crawlerShell.getPath());
-                if (!shellFile.exists()){
+                if (!shellFile.exists()) {
                     MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
                     headers.add("responseCode", ResponseMsg.CRAWLER_SHELL_NOT_EXISTS.getResponseCode());
                     headers.add("responseMessage", ResponseMsg.CRAWLER_SHELL_NOT_EXISTS.getResponseMessage());
