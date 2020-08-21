@@ -1,12 +1,21 @@
 package com.bc.crawler.server.task;
 
+import com.bc.crawler.server.entity.CrawlerShell;
+import com.bc.crawler.server.entity.Cron;
+import com.bc.crawler.server.service.CrawlerShellService;
+import com.bc.crawler.server.service.CronService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.support.CronTrigger;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 /**
@@ -17,23 +26,46 @@ import java.time.LocalDateTime;
 @Configuration
 @EnableScheduling
 public class DynamicScheduleTask implements SchedulingConfigurer {
+
+    private static final Logger logger = LoggerFactory.getLogger(DynamicScheduleTask.class);
+
+    @Resource
+    private CronService cronService;
+
+    @Resource
+    private CrawlerShellService crawlerShellService;
+
+
     @Override
     public void configureTasks(ScheduledTaskRegistrar scheduledTaskRegistrar) {
-        scheduledTaskRegistrar.addTriggerTask(
-                // 添加任务内容(Runnable)
-                () -> System.out.println("执行动态定时任务: " + LocalDateTime.now().toLocalTime()),
-                // 设置执行周期(Trigger)
-                triggerContext -> {
-                    // 从数据库获取执行周期
-//                    String cron = cronMapper.getCron();
-                    // 合法性校验.
-//                    if (StringUtils.isEmpty(cron)) {
-//                        // Omitted Code ..
-//                    }
-                    // 返回执行周期(Date)
-                    String cron = "0/10 * * * * ?";
-                    return new CronTrigger(cron).nextExecutionTime(triggerContext);
+        List<Cron> cronList = cronService.getCronList();
+        for (Cron cron : cronList) {
+
+            Runnable task = () -> {
+                logger.info(cron.getName() + " : " + LocalDateTime.now().toLocalTime());
+                CrawlerShell crawlerShell = crawlerShellService.getCrawlerShellByServiceType(cron.getServiceType());
+                if (null != crawlerShell) {
+                    try {
+                        Process ps = Runtime.getRuntime().exec(crawlerShell.getPath());
+                        ps.waitFor();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-        );
+            };
+
+            Trigger trigger = triggerContext -> {
+                // 实时获取定时任务
+
+                Cron realTimeCron = cronService.getCronById(cron.getId());
+
+                CronTrigger cronTrigger = new CronTrigger(realTimeCron.getRule());
+                return cronTrigger.nextExecutionTime(triggerContext);
+            };
+
+            scheduledTaskRegistrar.addTriggerTask(task, trigger);
+        }
+
+
     }
 }
