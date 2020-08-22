@@ -61,6 +61,19 @@ CREATE TABLE `t_exchange_rate` (
   PRIMARY KEY (`rate_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+/*Table structure for table `t_shell_execute_log` */
+
+DROP TABLE IF EXISTS `t_shell_execute_log`;
+
+CREATE TABLE `t_shell_execute_log` (
+  `log_id` varchar(32) NOT NULL COMMENT '脚本执行日志表主键',
+  `log_execute_type` varchar(100) DEFAULT NULL COMMENT '脚本执行类型 0:手动执行 1:定时任务',
+  `log_shell_service_type` varchar(100) DEFAULT NULL COMMENT '脚本业务类型',
+  `log_content` varchar(1000) DEFAULT NULL COMMENT '日志内容',
+  `log_create_time` varchar(20) DEFAULT NULL COMMENT '日志生成时间',
+  PRIMARY KEY (`log_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 /*Table structure for table `t_trade_moments` */
 
 DROP TABLE IF EXISTS `t_trade_moments`;
