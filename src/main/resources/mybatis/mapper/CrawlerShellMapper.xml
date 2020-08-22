@@ -50,4 +50,23 @@
         delete from t_crawler_shell
         where shell_id = #{shellId}
     </delete>
+
+    <insert id="addShellExecuteLog" parameterType="com.bc.crawler.server.entity.ShellExecuteLog">
+        insert into t_shell_execute_log
+        (
+        log_id,
+        log_execute_type,
+        log_shell_service_type,
+        log_content,
+        log_create_time
+        )
+        values
+        (
+        #{id},
+        #{executeType},
+        #{shellServiceType},
+        #{content},
+        now()
+        )
+    </insert>
 </mapper>

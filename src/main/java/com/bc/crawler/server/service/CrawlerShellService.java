@@ -1,6 +1,7 @@
 package com.bc.crawler.server.service;
 
 import com.bc.crawler.server.entity.CrawlerShell;
+import com.bc.crawler.server.entity.ShellExecuteLog;
 import com.github.pagehelper.PageInfo;
 
 import java.util.Map;
@@ -50,4 +51,11 @@ public interface CrawlerShellService {
      * @return 获取爬虫脚本列表
      */
     PageInfo<CrawlerShell> getCrawlerShellPageInfo(int pageNum, int pageSize, Map<String, String> paramMap);
+
+    /**
+     * 新增shell执行日志
+     *
+     * @param shellExecuteLog shell执行日志
+     */
+    void addShellExecuteLog(ShellExecuteLog shellExecuteLog);
 }

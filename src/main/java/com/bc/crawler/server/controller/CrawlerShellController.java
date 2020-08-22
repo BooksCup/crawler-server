@@ -2,6 +2,7 @@ package com.bc.crawler.server.controller;
 
 import com.bc.crawler.server.cons.Constant;
 import com.bc.crawler.server.entity.CrawlerShell;
+import com.bc.crawler.server.entity.ShellExecuteLog;
 import com.bc.crawler.server.enums.ResponseMsg;
 import com.bc.crawler.server.service.CrawlerShellService;
 import com.github.pagehelper.PageInfo;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -142,11 +145,25 @@ public class CrawlerShellController {
                     MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
                     headers.add("responseCode", ResponseMsg.CRAWLER_SHELL_NOT_EXISTS.getResponseCode());
                     headers.add("responseMessage", ResponseMsg.CRAWLER_SHELL_NOT_EXISTS.getResponseMessage());
+
+                    ShellExecuteLog shellExecuteLog = new ShellExecuteLog(Constant.SHELL_EXECUTE_TYPE_ACTIVE,
+                            serviceType, ResponseMsg.CRAWLER_SHELL_NOT_EXISTS.getResponseMessage());
+                    crawlerShellService.addShellExecuteLog(shellExecuteLog);
                     return new ResponseEntity<>(ResponseMsg.EXECUTE_CRAWLER_ERROR.getResponseCode(), headers, HttpStatus.BAD_REQUEST);
                 }
 
-                Process ps = Runtime.getRuntime().exec(crawlerShell.getPath());
-                ps.waitFor();
+                Process process = Runtime.getRuntime().exec(crawlerShell.getPath());
+                StringBuffer resultBuffer = new StringBuffer();
+                InputStreamReader inputStreamReader = new InputStreamReader(process.getInputStream());
+                LineNumberReader lineNumberReader = new LineNumberReader(inputStreamReader);
+                String line;
+                process.waitFor();
+                while ((line = lineNumberReader.readLine()) != null) {
+                    resultBuffer.append(line).append("\n");
+                }
+                ShellExecuteLog shellExecuteLog = new ShellExecuteLog(Constant.SHELL_EXECUTE_TYPE_ACTIVE,
+                        serviceType, resultBuffer.toString());
+                crawlerShellService.addShellExecuteLog(shellExecuteLog);
             }
             responseEntity = new ResponseEntity<>(ResponseMsg.EXECUTE_CRAWLER_SUCCESS.getResponseCode(), HttpStatus.OK);
         } catch (Exception e) {

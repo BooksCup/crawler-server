@@ -1,6 +1,7 @@
 package com.bc.crawler.server.mapper;
 
 import com.bc.crawler.server.entity.CrawlerShell;
+import com.bc.crawler.server.entity.ShellExecuteLog;
 
 import java.util.List;
 import java.util.Map;
@@ -48,4 +49,11 @@ public interface CrawlerShellMapper {
      * @return 获取爬虫脚本列表
      */
     List<CrawlerShell> getCrawlerShellList(Map<String, String> paramMap);
+
+    /**
+     * 新增shell执行日志
+     *
+     * @param shellExecuteLog shell执行日志
+     */
+    void addShellExecuteLog(ShellExecuteLog shellExecuteLog);
 }

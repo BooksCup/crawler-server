@@ -1,6 +1,7 @@
 package com.bc.crawler.server.service.impl;
 
 import com.bc.crawler.server.entity.CrawlerShell;
+import com.bc.crawler.server.entity.ShellExecuteLog;
 import com.bc.crawler.server.mapper.CrawlerShellMapper;
 import com.bc.crawler.server.service.CrawlerShellService;
 import com.github.pagehelper.PageHelper;
@@ -76,5 +77,15 @@ public class CrawlerShellServiceImpl implements CrawlerShellService {
         PageHelper.startPage(pageNum, pageSize);
         List<CrawlerShell> crawlerShellList = crawlerShellMapper.getCrawlerShellList(paramMap);
         return new PageInfo<>(crawlerShellList);
+    }
+
+    /**
+     * 新增shell执行日志
+     *
+     * @param shellExecuteLog shell执行日志
+     */
+    @Override
+    public void addShellExecuteLog(ShellExecuteLog shellExecuteLog) {
+        crawlerShellMapper.addShellExecuteLog(shellExecuteLog);
     }
 }
