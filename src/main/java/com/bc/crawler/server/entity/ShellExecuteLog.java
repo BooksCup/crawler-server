@@ -11,6 +11,7 @@ public class ShellExecuteLog {
     private String id;
     private String executeType;
     private String shellServiceType;
+    private String executeStatus;
     private String content;
     private String createTime;
 
@@ -47,6 +48,14 @@ public class ShellExecuteLog {
 
     public void setShellServiceType(String shellServiceType) {
         this.shellServiceType = shellServiceType;
+    }
+
+    public String getExecuteStatus() {
+        return executeStatus;
+    }
+
+    public void setExecuteStatus(String executeStatus) {
+        this.executeStatus = executeStatus;
     }
 
     public String getContent() {

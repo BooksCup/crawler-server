@@ -148,27 +148,20 @@ public class CrawlerShellController {
 
                     ShellExecuteLog shellExecuteLog = new ShellExecuteLog(Constant.SHELL_EXECUTE_TYPE_ACTIVE,
                             serviceType, ResponseMsg.CRAWLER_SHELL_NOT_EXISTS.getResponseMessage());
+                    shellExecuteLog.setExecuteStatus(Constant.SHELL_EXECUTE_STATUS_SUCCESS);
                     crawlerShellService.addShellExecuteLog(shellExecuteLog);
                     return new ResponseEntity<>(ResponseMsg.EXECUTE_CRAWLER_ERROR.getResponseCode(), headers, HttpStatus.BAD_REQUEST);
                 }
-
-                Process process = Runtime.getRuntime().exec(crawlerShell.getPath());
-                StringBuffer resultBuffer = new StringBuffer();
-                InputStreamReader inputStreamReader = new InputStreamReader(process.getInputStream());
-                LineNumberReader lineNumberReader = new LineNumberReader(inputStreamReader);
-                String line;
-                process.waitFor();
-                while ((line = lineNumberReader.readLine()) != null) {
-                    resultBuffer.append(line).append("\n");
-                }
-                ShellExecuteLog shellExecuteLog = new ShellExecuteLog(Constant.SHELL_EXECUTE_TYPE_ACTIVE,
-                        serviceType, resultBuffer.toString());
-                crawlerShellService.addShellExecuteLog(shellExecuteLog);
+                crawlerShellService.executeCrawlerShell(serviceType, Constant.SHELL_EXECUTE_TYPE_ACTIVE, crawlerShell.getPath());
             }
             responseEntity = new ResponseEntity<>(ResponseMsg.EXECUTE_CRAWLER_SUCCESS.getResponseCode(), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("[executeCrawlerShell] error, msg: " + e.getMessage());
+            ShellExecuteLog shellExecuteLog = new ShellExecuteLog(Constant.SHELL_EXECUTE_TYPE_ACTIVE,
+                    serviceType, e.getMessage());
+            shellExecuteLog.setExecuteStatus(Constant.SHELL_EXECUTE_STATUS_FAIL);
+            crawlerShellService.addShellExecuteLog(shellExecuteLog);
             responseEntity = new ResponseEntity<>(ResponseMsg.EXECUTE_CRAWLER_ERROR.getResponseCode(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return responseEntity;

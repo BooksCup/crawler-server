@@ -1,5 +1,6 @@
 package com.bc.crawler.server.task;
 
+import com.bc.crawler.server.cons.Constant;
 import com.bc.crawler.server.entity.CrawlerShell;
 import com.bc.crawler.server.entity.Cron;
 import com.bc.crawler.server.service.CrawlerShellService;
@@ -45,12 +46,7 @@ public class DynamicScheduleTask implements SchedulingConfigurer {
                 logger.info(cron.getName() + " : " + LocalDateTime.now().toLocalTime());
                 CrawlerShell crawlerShell = crawlerShellService.getCrawlerShellByServiceType(cron.getServiceType());
                 if (null != crawlerShell) {
-                    try {
-                        Process ps = Runtime.getRuntime().exec(crawlerShell.getPath());
-                        ps.waitFor();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    crawlerShellService.executeCrawlerShell(cron.getServiceType(), Constant.SHELL_EXECUTE_TYPE_CRON, crawlerShell.getPath());
                 }
             };
 

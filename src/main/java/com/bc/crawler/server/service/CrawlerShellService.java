@@ -58,4 +58,13 @@ public interface CrawlerShellService {
      * @param shellExecuteLog shell执行日志
      */
     void addShellExecuteLog(ShellExecuteLog shellExecuteLog);
+
+    /**
+     * 执行爬虫脚本
+     *
+     * @param serviceType 脚本业务类型
+     * @param executeType 脚本执行类型 "0": 手动执行 "1": 定时任务
+     * @param path        脚本路径
+     */
+    void executeCrawlerShell(String serviceType, String executeType, String path);
 }

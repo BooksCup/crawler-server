@@ -1,5 +1,6 @@
 package com.bc.crawler.server.service.impl;
 
+import com.bc.crawler.server.cons.Constant;
 import com.bc.crawler.server.entity.CrawlerShell;
 import com.bc.crawler.server.entity.ShellExecuteLog;
 import com.bc.crawler.server.mapper.CrawlerShellMapper;
@@ -9,6 +10,8 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.util.List;
 import java.util.Map;
 
@@ -87,5 +90,37 @@ public class CrawlerShellServiceImpl implements CrawlerShellService {
     @Override
     public void addShellExecuteLog(ShellExecuteLog shellExecuteLog) {
         crawlerShellMapper.addShellExecuteLog(shellExecuteLog);
+    }
+
+    /**
+     * 执行爬虫脚本
+     *
+     * @param serviceType 脚本业务类型
+     * @param executeType 脚本执行类型 "0": 手动执行 "1": 定时任务
+     * @param path        脚本路径
+     */
+    @Override
+    public void executeCrawlerShell(String serviceType, String executeType, String path) {
+        try {
+            Process process = Runtime.getRuntime().exec(path);
+            StringBuffer resultBuffer = new StringBuffer();
+            InputStreamReader inputStreamReader = new InputStreamReader(process.getInputStream());
+            LineNumberReader lineNumberReader = new LineNumberReader(inputStreamReader);
+            String line;
+            process.waitFor();
+            while ((line = lineNumberReader.readLine()) != null) {
+                resultBuffer.append(line).append("\n");
+            }
+            ShellExecuteLog shellExecuteLog = new ShellExecuteLog(executeType,
+                    serviceType, resultBuffer.toString());
+            shellExecuteLog.setExecuteStatus(Constant.SHELL_EXECUTE_STATUS_SUCCESS);
+            crawlerShellMapper.addShellExecuteLog(shellExecuteLog);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ShellExecuteLog shellExecuteLog = new ShellExecuteLog(executeType,
+                    serviceType, e.getMessage());
+            shellExecuteLog.setExecuteStatus(Constant.SHELL_EXECUTE_STATUS_FAIL);
+            crawlerShellMapper.addShellExecuteLog(shellExecuteLog);
+        }
     }
 }

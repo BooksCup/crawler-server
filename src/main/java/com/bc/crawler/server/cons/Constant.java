@@ -2,6 +2,7 @@ package com.bc.crawler.server.cons;
 
 /**
  * 常量类
+ *
  * @author zhou
  */
 public class Constant {
@@ -23,4 +24,15 @@ public class Constant {
      * 定时任务
      */
     public static final String SHELL_EXECUTE_TYPE_CRON = "1";
+
+    // shell脚本执行状态
+    /**
+     * 脚本执行成功
+     */
+    public static final String SHELL_EXECUTE_STATUS_SUCCESS = "0";
+
+    /**
+     * 脚本执行失败
+     */
+    public static final String SHELL_EXECUTE_STATUS_FAIL = "1";
 }

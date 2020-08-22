@@ -57,6 +57,7 @@
         log_id,
         log_execute_type,
         log_shell_service_type,
+        log_execute_status,
         log_content,
         log_create_time
         )
@@ -65,6 +66,7 @@
         #{id},
         #{executeType},
         #{shellServiceType},
+        #{executeStatus},
         #{content},
         now()
         )
