@@ -51,8 +51,8 @@ public class CrawlerShellController {
         ResponseEntity<PageInfo<CrawlerShell>> responseEntity;
         try {
             Map<String, String> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
-            PageInfo<CrawlerShell> weavePricePageInfo = crawlerShellService.getCrawlerShellPageInfo(page, limit, paramMap);
-            responseEntity = new ResponseEntity<>(weavePricePageInfo, HttpStatus.OK);
+            PageInfo<CrawlerShell> crawlerShellPageInfo = crawlerShellService.getCrawlerShellPageInfo(page, limit, paramMap);
+            responseEntity = new ResponseEntity<>(crawlerShellPageInfo, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             responseEntity = new ResponseEntity<>(new PageInfo<>(), HttpStatus.INTERNAL_SERVER_ERROR);
