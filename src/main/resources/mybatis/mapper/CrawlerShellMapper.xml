@@ -9,6 +9,15 @@
         <result column="shell_modify_time" property="modifyTime" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap id="shellExecuteLog" type="com.bc.crawler.server.entity.ShellExecuteLog">
+        <id column="log_id" property="id" jdbcType="VARCHAR"/>
+        <result column="log_execute_type" property="executeType" jdbcType="VARCHAR"/>
+        <result column="log_shell_service_type" property="shellServiceType" jdbcType="VARCHAR"/>
+        <result column="log_execute_status" property="executeStatus" jdbcType="VARCHAR"/>
+        <result column="log_content" property="content" jdbcType="VARCHAR"/>
+        <result column="log_create_time" property="createTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <select id="getCrawlerShellList" resultMap="crawlerShell" parameterType="map">
         select *
         from t_crawler_shell
@@ -71,4 +80,11 @@
         now()
         )
     </insert>
+
+    <select id="getShellExecuteLogList" resultMap="shellExecuteLog" parameterType="map">
+        select *
+        from t_shell_execute_log
+        where log_shell_service_type = #{serviceType}
+        order by log_create_time desc
+    </select>
 </mapper>

@@ -56,4 +56,12 @@ public interface CrawlerShellMapper {
      * @param shellExecuteLog shell执行日志
      */
     void addShellExecuteLog(ShellExecuteLog shellExecuteLog);
+
+    /**
+     * 获取shell脚本执行日志列表
+     *
+     * @param paramMap 参数map
+     * @return shell脚本执行日志列表
+     */
+    List<ShellExecuteLog> getShellExecuteLogList(Map<String, String> paramMap);
 }

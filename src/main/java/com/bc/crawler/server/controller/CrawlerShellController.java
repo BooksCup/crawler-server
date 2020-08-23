@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.File;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -184,6 +182,35 @@ public class CrawlerShellController {
         } catch (Exception e) {
             logger.error("[deleteCrawlerShell] error, msg: " + e.getMessage());
             responseEntity = new ResponseEntity<>(ResponseMsg.DELETE_CRAWLER_ERROR.getResponseCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseEntity;
+    }
+
+    /**
+     * 获取shell脚本执行日志分页信息
+     *
+     * @param page        当前分页数
+     * @param limit       分页大小
+     * @param serviceType 业务类型
+     * @return shell脚本执行日志分页信息
+     */
+    @ApiOperation(value = "获取shell脚本执行日志分页信息", notes = "获取shell脚本执行日志分页信息")
+    @GetMapping(value = "/shellExecuteLog")
+    public ResponseEntity<PageInfo<ShellExecuteLog>> getShellExecuteLogPageInfo(
+            @RequestParam(required = false, defaultValue = "1") Integer page,
+            @RequestParam(required = false, defaultValue = "10") Integer limit,
+            @RequestParam String serviceType) {
+        logger.info("[getShellExecuteLogPageInfo], page: " + page + ", limit: " + limit + ", serviceType: " + serviceType);
+        ResponseEntity<PageInfo<ShellExecuteLog>> responseEntity;
+        try {
+            Map<String, String> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
+            paramMap.put("serviceType", serviceType);
+
+            PageInfo<ShellExecuteLog> shellExecuteLogPageInfo = crawlerShellService.getShellExecuteLogPageInfo(page, limit, paramMap);
+            responseEntity = new ResponseEntity<>(shellExecuteLogPageInfo, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseEntity = new ResponseEntity<>(new PageInfo<>(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return responseEntity;
     }

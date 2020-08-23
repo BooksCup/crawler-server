@@ -67,4 +67,14 @@ public interface CrawlerShellService {
      * @param path        脚本路径
      */
     void executeCrawlerShell(String serviceType, String executeType, String path);
+
+    /**
+     * 获取shell脚本执行日志分页信息
+     *
+     * @param pageNum  当前分页数
+     * @param pageSize 分页大小
+     * @param paramMap 参数map
+     * @return shell脚本执行日志分页信息
+     */
+    PageInfo<ShellExecuteLog> getShellExecuteLogPageInfo(int pageNum, int pageSize, Map<String, String> paramMap);
 }

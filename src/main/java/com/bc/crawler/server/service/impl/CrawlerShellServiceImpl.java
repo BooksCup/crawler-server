@@ -123,4 +123,19 @@ public class CrawlerShellServiceImpl implements CrawlerShellService {
             crawlerShellMapper.addShellExecuteLog(shellExecuteLog);
         }
     }
+
+    /**
+     * 获取shell脚本执行日志分页信息
+     *
+     * @param pageNum  当前分页数
+     * @param pageSize 分页大小
+     * @param paramMap 参数map
+     * @return shell脚本执行日志分页信息
+     */
+    @Override
+    public PageInfo<ShellExecuteLog> getShellExecuteLogPageInfo(int pageNum, int pageSize, Map<String, String> paramMap) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<ShellExecuteLog> shellExecuteLogList = crawlerShellMapper.getShellExecuteLogList(paramMap);
+        return new PageInfo<>(shellExecuteLogList);
+    }
 }
