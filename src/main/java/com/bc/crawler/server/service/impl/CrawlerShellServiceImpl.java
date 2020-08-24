@@ -5,6 +5,7 @@ import com.bc.crawler.server.entity.CrawlerShell;
 import com.bc.crawler.server.entity.ShellExecuteLog;
 import com.bc.crawler.server.mapper.CrawlerShellMapper;
 import com.bc.crawler.server.service.CrawlerShellService;
+import com.bc.crawler.server.utils.OsUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -112,13 +113,13 @@ public class CrawlerShellServiceImpl implements CrawlerShellService {
                 resultBuffer.append(line).append("\n");
             }
             ShellExecuteLog shellExecuteLog = new ShellExecuteLog(executeType,
-                    serviceType, resultBuffer.toString());
+                    serviceType, resultBuffer.toString(), OsUtil.getOsName(), OsUtil.getIp());
             shellExecuteLog.setExecuteStatus(Constant.SHELL_EXECUTE_STATUS_SUCCESS);
             crawlerShellMapper.addShellExecuteLog(shellExecuteLog);
         } catch (Exception e) {
             e.printStackTrace();
             ShellExecuteLog shellExecuteLog = new ShellExecuteLog(executeType,
-                    serviceType, e.getMessage());
+                    serviceType, e.getMessage(), OsUtil.getOsName(), OsUtil.getIp());
             shellExecuteLog.setExecuteStatus(Constant.SHELL_EXECUTE_STATUS_FAIL);
             crawlerShellMapper.addShellExecuteLog(shellExecuteLog);
         }

@@ -67,6 +67,8 @@
         log_execute_type,
         log_shell_service_type,
         log_execute_status,
+        log_os_name,
+        log_ip,
         log_content,
         log_create_time
         )
@@ -76,6 +78,8 @@
         #{executeType},
         #{shellServiceType},
         #{executeStatus},
+        #{osName},
+        #{ip},
         #{content},
         now()
         )

@@ -5,6 +5,7 @@ import com.bc.crawler.server.entity.CrawlerShell;
 import com.bc.crawler.server.entity.ShellExecuteLog;
 import com.bc.crawler.server.enums.ResponseMsg;
 import com.bc.crawler.server.service.CrawlerShellService;
+import com.bc.crawler.server.utils.OsUtil;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -145,7 +146,7 @@ public class CrawlerShellController {
                     headers.add("responseMessage", ResponseMsg.CRAWLER_SHELL_NOT_EXISTS.getResponseMessage());
 
                     ShellExecuteLog shellExecuteLog = new ShellExecuteLog(Constant.SHELL_EXECUTE_TYPE_ACTIVE,
-                            serviceType, ResponseMsg.CRAWLER_SHELL_NOT_EXISTS.getResponseMessage());
+                            serviceType, ResponseMsg.CRAWLER_SHELL_NOT_EXISTS.getResponseMessage(), OsUtil.getOsName(), OsUtil.getIp());
                     shellExecuteLog.setExecuteStatus(Constant.SHELL_EXECUTE_STATUS_SUCCESS);
                     crawlerShellService.addShellExecuteLog(shellExecuteLog);
                     return new ResponseEntity<>(ResponseMsg.EXECUTE_CRAWLER_ERROR.getResponseCode(), headers, HttpStatus.BAD_REQUEST);
@@ -157,7 +158,7 @@ public class CrawlerShellController {
             e.printStackTrace();
             logger.error("[executeCrawlerShell] error, msg: " + e.getMessage());
             ShellExecuteLog shellExecuteLog = new ShellExecuteLog(Constant.SHELL_EXECUTE_TYPE_ACTIVE,
-                    serviceType, e.getMessage());
+                    serviceType, e.getMessage(), OsUtil.getOsName(), OsUtil.getIp());
             shellExecuteLog.setExecuteStatus(Constant.SHELL_EXECUTE_STATUS_FAIL);
             crawlerShellService.addShellExecuteLog(shellExecuteLog);
             responseEntity = new ResponseEntity<>(ResponseMsg.EXECUTE_CRAWLER_ERROR.getResponseCode(), HttpStatus.INTERNAL_SERVER_ERROR);

@@ -12,6 +12,8 @@ public class ShellExecuteLog {
     private String executeType;
     private String shellServiceType;
     private String executeStatus;
+    private String osName;
+    private String ip;
     private String content;
     private String createTime;
 
@@ -19,11 +21,14 @@ public class ShellExecuteLog {
 
     }
 
-    public ShellExecuteLog(String executeType, String shellServiceType, String content) {
+    public ShellExecuteLog(String executeType, String shellServiceType,
+                           String content, String osName, String ip) {
         this.id = CommonUtil.generateId();
         this.executeType = executeType;
         this.shellServiceType = shellServiceType;
         this.content = content;
+        this.osName = osName;
+        this.ip = ip;
     }
 
     public String getId() {
@@ -56,6 +61,22 @@ public class ShellExecuteLog {
 
     public void setExecuteStatus(String executeStatus) {
         this.executeStatus = executeStatus;
+    }
+
+    public String getOsName() {
+        return osName;
+    }
+
+    public void setOsName(String osName) {
+        this.osName = osName;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public String getContent() {
