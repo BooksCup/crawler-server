@@ -14,6 +14,8 @@
         <result column="log_execute_type" property="executeType" jdbcType="VARCHAR"/>
         <result column="log_shell_service_type" property="shellServiceType" jdbcType="VARCHAR"/>
         <result column="log_execute_status" property="executeStatus" jdbcType="VARCHAR"/>
+        <result column="log_os_name" property="osName" jdbcType="VARCHAR"/>
+        <result column="log_ip" property="ip" jdbcType="VARCHAR"/>
         <result column="log_content" property="content" jdbcType="VARCHAR"/>
         <result column="log_create_time" property="createTime" jdbcType="VARCHAR"/>
     </resultMap>
