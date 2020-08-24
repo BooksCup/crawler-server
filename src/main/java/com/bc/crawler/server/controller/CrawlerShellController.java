@@ -199,12 +199,17 @@ public class CrawlerShellController {
     public ResponseEntity<PageInfo<ShellExecuteLog>> getShellExecuteLogPageInfo(
             @RequestParam(required = false, defaultValue = "1") Integer page,
             @RequestParam(required = false, defaultValue = "10") Integer limit,
-            @RequestParam String serviceType) {
-        logger.info("[getShellExecuteLogPageInfo], page: " + page + ", limit: " + limit + ", serviceType: " + serviceType);
+            @RequestParam String serviceType,
+            @RequestParam(required = false) String executeType,
+            @RequestParam(required = false) String executeStatus) {
+        logger.info("[getShellExecuteLogPageInfo], page: " + page + ", limit: " + limit + ", serviceType: " + serviceType
+                + ", executeType: " + executeType + ", executeStatus: " + executeStatus);
         ResponseEntity<PageInfo<ShellExecuteLog>> responseEntity;
         try {
             Map<String, String> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
             paramMap.put("serviceType", serviceType);
+            paramMap.put("executeType", executeType);
+            paramMap.put("executeStatus", executeStatus);
 
             PageInfo<ShellExecuteLog> shellExecuteLogPageInfo = crawlerShellService.getShellExecuteLogPageInfo(page, limit, paramMap);
             responseEntity = new ResponseEntity<>(shellExecuteLogPageInfo, HttpStatus.OK);

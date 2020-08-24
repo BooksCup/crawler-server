@@ -85,6 +85,12 @@
         select *
         from t_shell_execute_log
         where log_shell_service_type = #{serviceType}
+        <if test="executeType != null and executeType != ''">
+            and log_execute_type = #{executeType}
+        </if>
+        <if test="executeStatus != null and executeStatus != ''">
+            and log_execute_status = #{executeStatus}
+        </if>
         order by log_create_time desc
     </select>
 </mapper>
