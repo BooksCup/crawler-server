@@ -147,7 +147,7 @@ public class CrawlerShellController {
 
                     ShellExecuteLog shellExecuteLog = new ShellExecuteLog(Constant.SHELL_EXECUTE_TYPE_ACTIVE,
                             serviceType, ResponseMsg.CRAWLER_SHELL_NOT_EXISTS.getResponseMessage(), OsUtil.getOsName(), OsUtil.getIp());
-                    shellExecuteLog.setExecuteStatus(Constant.SHELL_EXECUTE_STATUS_SUCCESS);
+                    shellExecuteLog.setExecuteStatus(Constant.SHELL_EXECUTE_STATUS_FAIL);
                     crawlerShellService.addShellExecuteLog(shellExecuteLog);
                     return new ResponseEntity<>(ResponseMsg.EXECUTE_CRAWLER_ERROR.getResponseCode(), headers, HttpStatus.BAD_REQUEST);
                 }
