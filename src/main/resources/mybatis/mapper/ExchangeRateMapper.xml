@@ -14,10 +14,24 @@
         <result column="rate_create_time" property="createTime" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <select id="getCurrencyList" resultType="String">
+        select distinct rate_currency_name
+        from t_exchange_rate
+    </select>
+
     <select id="getExchangeRateList" resultMap="exchangeRate" parameterType="map">
         select *
         from t_exchange_rate
         where 1 = 1
+        <if test="currencyName != null and currencyName != ''">
+            and rate_currency_name = #{currencyName}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and rate_publish_date <![CDATA[ >= ]]> #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and rate_publish_date <![CDATA[ <= ]]> #{endTime}
+        </if>
         order by rate_publish_date desc
     </select>
 </mapper>

@@ -11,6 +11,14 @@ import java.util.Map;
  * @author zhou
  */
 public interface ExchangeRateMapper {
+
+    /**
+     * 获取币种列表
+     *
+     * @return 币种列表
+     */
+    List<String> getCurrencyList();
+
     /**
      * 获取汇率列表
      *

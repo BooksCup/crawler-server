@@ -3,6 +3,7 @@ package com.bc.crawler.server.service;
 import com.bc.crawler.server.entity.ExchangeRate;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,6 +12,13 @@ import java.util.Map;
  * @author zhou
  */
 public interface ExchangeRateService {
+
+    /**
+     * 获取币种列表
+     *
+     * @return 币种列表
+     */
+    List<String> getCurrencyList();
 
     /**
      * 获取汇率分页信息

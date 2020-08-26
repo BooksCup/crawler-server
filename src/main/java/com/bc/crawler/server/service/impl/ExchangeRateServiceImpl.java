@@ -23,6 +23,16 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     private ExchangeRateMapper exchangeRateMapper;
 
     /**
+     * 获取币种列表
+     *
+     * @return 币种列表
+     */
+    @Override
+    public List<String> getCurrencyList() {
+        return exchangeRateMapper.getCurrencyList();
+    }
+
+    /**
      * 获取汇率分页信息
      *
      * @param pageNum  当前分页数
