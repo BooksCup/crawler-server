@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bc.crawler.server.mapper.ExchangeRateMapper">
+    <resultMap id="exchangeRate" type="com.bc.crawler.server.entity.ExchangeRate">
+        <id column="rate_id" property="id" jdbcType="VARCHAR"/>
+        <result column="rate_currency_name" property="currencyName" jdbcType="VARCHAR"/>
+        <result column="rate_currency_buy" property="currencyBuy" jdbcType="VARCHAR"/>
+        <result column="rate_currency_sell" property="currencySell" jdbcType="VARCHAR"/>
+        <result column="rate_cash_buy" property="cashBuy" jdbcType="VARCHAR"/>
+        <result column="rate_cash_sell" property="cashSell" jdbcType="VARCHAR"/>
+        <result column="rate_middle" property="middle" jdbcType="VARCHAR"/>
+        <result column="rate_publish_date" property="publishDate" jdbcType="VARCHAR"/>
+        <result column="rate_publish_time" property="publishTime" jdbcType="VARCHAR"/>
+        <result column="rate_create_time" property="createTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getExchangeRateList" resultMap="exchangeRate" parameterType="map">
+        select *
+        from t_exchange_rate
+        where 1 = 1
+        order by rate_publish_date desc
+    </select>
+</mapper>
