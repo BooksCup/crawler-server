@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 汇率
+ * 实时汇率
  *
  * @author zhou
  */
@@ -33,12 +33,12 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     }
 
     /**
-     * 获取汇率分页信息
+     * 获取实时汇率分页信息
      *
      * @param pageNum  当前分页数
      * @param pageSize 分页大小
      * @param paramMap 参数map
-     * @return 汇率分页信息
+     * @return 实时汇率分页信息
      */
     @Override
     public PageInfo<ExchangeRate> getExchangeRatePageInfo(int pageNum, int pageSize, Map<String, String> paramMap) {

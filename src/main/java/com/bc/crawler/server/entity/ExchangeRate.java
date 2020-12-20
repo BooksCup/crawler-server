@@ -1,11 +1,12 @@
 package com.bc.crawler.server.entity;
 
 /**
- * 汇率
+ * 实时汇率
  *
  * @author zhou
  */
 public class ExchangeRate {
+
     private String id;
     /**
      * 币种名
@@ -128,4 +129,5 @@ public class ExchangeRate {
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
+
 }

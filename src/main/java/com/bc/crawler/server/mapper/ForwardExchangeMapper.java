@@ -1,16 +1,16 @@
 package com.bc.crawler.server.mapper;
 
-import com.bc.crawler.server.entity.ExchangeRate;
+import com.bc.crawler.server.entity.ForwardExchange;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * 实时汇率
+ * 远期汇率
  *
  * @author zhou
  */
-public interface ExchangeRateMapper {
+public interface ForwardExchangeMapper {
 
     /**
      * 获取币种列表
@@ -20,10 +20,10 @@ public interface ExchangeRateMapper {
     List<String> getCurrencyList();
 
     /**
-     * 获取实时汇率列表
+     * 获取远期汇率列表
      *
      * @param paramMap 参数map
-     * @return 实时汇率列表
+     * @return 远期汇率列表
      */
-    List<ExchangeRate> getExchangeRateList(Map<String, String> paramMap);
+    List<ForwardExchange> getForwardExchangeList(Map<String, String> paramMap);
 }
