@@ -3,13 +3,11 @@ package com.bc.crawler.server.service.impl;
 import com.bc.crawler.server.entity.HotExchange;
 import com.bc.crawler.server.mapper.HotExchangeMapper;
 import com.bc.crawler.server.service.HotExchangeService;
-import com.bc.crawler.server.utils.CommonUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -55,12 +53,7 @@ public class HotExchangeServiceImpl implements HotExchangeService {
     public PageInfo<HotExchange> getHotExchangeList(int pageNum, int pageSize, Map<String, String> paramMap) {
         PageHelper.startPage(pageNum, pageSize);
         List<HotExchange> hotExchangeList = hotExchangeMapper.getHotExchangeList(paramMap);
-        List<HotExchange> hotExchangeHtmlList = new ArrayList<>();
-        for (HotExchange hotExchange : hotExchangeList) {
-            hotExchange = CommonUtil.handleHotExchange(hotExchange);
-            hotExchangeHtmlList.add(hotExchange);
-        }
-        return new PageInfo<>(hotExchangeHtmlList);
+        return new PageInfo<>(hotExchangeList);
     }
 
 }

@@ -3,6 +3,7 @@ package com.bc.crawler.server.controller;
 import com.bc.crawler.server.cons.Constant;
 import com.bc.crawler.server.entity.HotExchange;
 import com.bc.crawler.server.service.HotExchangeService;
+import com.bc.crawler.server.utils.CommonUtil;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -72,6 +73,14 @@ public class HotExchangeController {
             paramMap.put("currencyName", currencyName);
 
             PageInfo<HotExchange> hotExchangePageInfo = hotExchangeService.getHotExchangeList(page, limit, paramMap);
+            List<HotExchange> hotExchangeList = hotExchangePageInfo.getList();
+            List<HotExchange> hotExchangeHtmlList = new ArrayList<>();
+            for (HotExchange hotExchange : hotExchangeList) {
+                hotExchange = CommonUtil.handleHotExchange(hotExchange);
+                hotExchangeHtmlList.add(hotExchange);
+            }
+            hotExchangePageInfo.setList(hotExchangeHtmlList);
+
             responseEntity = new ResponseEntity<>(hotExchangePageInfo, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
