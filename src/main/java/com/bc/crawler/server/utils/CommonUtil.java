@@ -1,6 +1,7 @@
 package com.bc.crawler.server.utils;
 
 import com.bc.crawler.server.entity.HotExchange;
+import com.bc.crawler.server.enums.CurrencyTitleInfo;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
@@ -82,6 +83,7 @@ public class CommonUtil {
         hotExchange.setYesterdayPriceHtml(yesterdayPriceHtmlBuffer.toString());
         hotExchange.setHighestPriceHtml(highestPriceHtmlBuffer.toString());
         hotExchange.setLowestPriceHtml(lowestPriceHtmlBuffer.toString());
+        hotExchange.setTitle(CurrencyTitleInfo.getCurrencyTitleByCurrency(hotExchange.getCurrencyName()));
         return hotExchange;
     }
 

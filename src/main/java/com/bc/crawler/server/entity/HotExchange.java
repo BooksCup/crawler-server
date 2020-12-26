@@ -8,6 +8,7 @@ package com.bc.crawler.server.entity;
 public class HotExchange {
 
     private String id;
+    private String title;
     private String currencyName;
     private String currentPrice;
     private String change;
@@ -35,6 +36,14 @@ public class HotExchange {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getCurrencyName() {
