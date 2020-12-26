@@ -1,5 +1,6 @@
 package com.bc.crawler.server.controller;
 
+import com.bc.crawler.server.cons.Constant;
 import com.bc.crawler.server.entity.HotExchange;
 import com.bc.crawler.server.service.HotExchangeService;
 import com.github.pagehelper.PageInfo;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 热门汇率
@@ -37,12 +40,16 @@ public class HotExchangeController {
     @ApiOperation(value = "获取热门汇率分页信息", notes = "获取热门汇率分页信息")
     @GetMapping(value = "")
     public ResponseEntity<PageInfo<HotExchange>> getHotExchangeList(
+            @RequestParam(required = false) String currencyName,
             @RequestParam(required = false, defaultValue = "1") Integer page,
             @RequestParam(required = false, defaultValue = "10") Integer limit) {
         logger.info("[getHotExchangeList], page: " + page + ", limit: " + limit);
         ResponseEntity<PageInfo<HotExchange>> responseEntity;
         try {
-            PageInfo<HotExchange> hotExchangePageInfo = hotExchangeService.getHotExchangeList(page, limit);
+            Map<String, String> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
+            paramMap.put("currencyName", currencyName);
+
+            PageInfo<HotExchange> hotExchangePageInfo = hotExchangeService.getHotExchangeList(page, limit, paramMap);
             responseEntity = new ResponseEntity<>(hotExchangePageInfo, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

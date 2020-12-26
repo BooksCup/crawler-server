@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 热门汇率
@@ -25,12 +26,12 @@ public class HotExchangeServiceImpl implements HotExchangeService {
 
     /**
      * 获取热门汇率列表
-     *
+     * @param paramMap 参数map
      * @return 热门汇率列表
      */
     @Override
-    public List<HotExchange> getHotExchangeList() {
-        return hotExchangeMapper.getHotExchangeList();
+    public List<HotExchange> getHotExchangeList(Map<String, String> paramMap) {
+        return hotExchangeMapper.getHotExchangeList(paramMap);
     }
 
     /**
@@ -41,9 +42,9 @@ public class HotExchangeServiceImpl implements HotExchangeService {
      * @return 热门汇率分页信息
      */
     @Override
-    public PageInfo<HotExchange> getHotExchangeList(int pageNum, int pageSize) {
+    public PageInfo<HotExchange> getHotExchangeList(int pageNum, int pageSize, Map<String, String> paramMap) {
         PageHelper.startPage(pageNum, pageSize);
-        List<HotExchange> hotExchangeList = hotExchangeMapper.getHotExchangeList();
+        List<HotExchange> hotExchangeList = hotExchangeMapper.getHotExchangeList(paramMap);
         List<HotExchange> hotExchangeHtmlList = new ArrayList<>();
         for (HotExchange hotExchange : hotExchangeList) {
             hotExchange = CommonUtil.handleHotExchange(hotExchange);

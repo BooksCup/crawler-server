@@ -59,7 +59,8 @@ public class DataProfileController {
 
             dataProfile.setWeavePriceList(weavePriceList);
 
-            List<HotExchange> hotExchangeList = hotExchangeService.getHotExchangeList();
+            paramMap.clear();
+            List<HotExchange> hotExchangeList = hotExchangeService.getHotExchangeList(paramMap);
             if (!CollectionUtils.isEmpty(hotExchangeList)) {
                 HotExchange hotExchange = hotExchangeList.get(0);
                 hotExchange = CommonUtil.handleHotExchange(hotExchange);
