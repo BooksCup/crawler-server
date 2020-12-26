@@ -12,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,6 +31,26 @@ public class HotExchangeController {
 
     @Resource
     private HotExchangeService hotExchangeService;
+
+    /**
+     * 获取币种列表
+     *
+     * @return 币种列表
+     */
+    @ApiOperation(value = "获取币种列表", notes = "获取币种列表")
+    @GetMapping(value = "/currency")
+    public ResponseEntity<List<String>> getCurrencyList() {
+        logger.info("[getCurrencyList]");
+        ResponseEntity<List<String>> responseEntity;
+        try {
+            List<String> currencyList = hotExchangeService.getCurrencyList();
+            responseEntity = new ResponseEntity<>(currencyList, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseEntity = new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseEntity;
+    }
 
     /**
      * 获取热门汇率分页信息

@@ -19,6 +19,11 @@
         <result column="lowest_price_css" property="lowestPriceCss" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <select id="getCurrencyList" resultType="String">
+        select distinct currency_name
+        from t_hot_exchange
+    </select>
+
     <select id="getHotExchangeList" resultMap="hotExchange" parameterType="map">
         select *
         from t_hot_exchange
@@ -28,4 +33,5 @@
         </if>
         order by create_time desc
     </select>
+
 </mapper>

@@ -25,6 +25,16 @@ public class HotExchangeServiceImpl implements HotExchangeService {
     private HotExchangeMapper hotExchangeMapper;
 
     /**
+     * 获取币种列表
+     *
+     * @return 币种列表
+     */
+    @Override
+    public List<String> getCurrencyList() {
+        return hotExchangeMapper.getCurrencyList();
+    }
+
+    /**
      * 获取热门汇率列表
      * @param paramMap 参数map
      * @return 热门汇率列表

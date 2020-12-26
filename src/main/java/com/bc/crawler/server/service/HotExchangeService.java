@@ -15,6 +15,13 @@ import java.util.Map;
 public interface HotExchangeService {
 
     /**
+     * 获取币种列表
+     *
+     * @return 币种列表
+     */
+    List<String> getCurrencyList();
+
+    /**
      * 获取热门汇率列表
      *
      * @param paramMap 参数map
