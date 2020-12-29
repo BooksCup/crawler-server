@@ -46,4 +46,16 @@ public class WeavePriceServiceImpl implements WeavePriceService {
         List<WeavePrice> weavePriceList = weavePriceMapper.getWeavePriceList(paramMap);
         return new PageInfo<>(weavePriceList);
     }
+
+    /**
+     * 获取纺织品价格列表
+     *
+     * @param paramMap 参数map
+     * @return 纺织品价格列表
+     */
+    @Override
+    public List<WeavePrice> getWeavePriceList(Map<String, String> paramMap) {
+        return weavePriceMapper.getWeavePriceList(paramMap);
+    }
+
 }

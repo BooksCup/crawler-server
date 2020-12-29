@@ -29,4 +29,13 @@ public interface WeavePriceService {
      * @return 纺织品价格分页信息
      */
     PageInfo<WeavePrice> getWeavePricePageInfo(int pageNum, int pageSize, Map<String, String> paramMap);
+
+    /**
+     * 获取纺织品价格列表
+     *
+     * @param paramMap 参数map
+     * @return 纺织品价格列表
+     */
+    List<WeavePrice> getWeavePriceList(Map<String, String> paramMap);
+
 }

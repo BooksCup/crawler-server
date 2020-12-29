@@ -22,7 +22,6 @@ import java.util.Map;
  *
  * @author zhou
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/weavePrice")
 public class WeavePriceController {
@@ -37,6 +36,7 @@ public class WeavePriceController {
      *
      * @return 纺织品类型列表
      */
+    @CrossOrigin
     @ApiOperation(value = "获取纺织品类型列表", notes = "获取纺织品类型列表")
     @GetMapping(value = "/type")
     public ResponseEntity<List<String>> getWeaveTypeList() {
@@ -62,6 +62,7 @@ public class WeavePriceController {
      * @param limit 分页大小
      * @return 纺织品价格分页信息
      */
+    @CrossOrigin
     @ApiOperation(value = "获取纺织品价格分页信息", notes = "获取纺织品价格分页信息")
     @GetMapping(value = "")
     public ResponseEntity<PageInfo<WeavePrice>> getWeavePricePageInfo(
@@ -83,6 +84,36 @@ public class WeavePriceController {
         } catch (Exception e) {
             e.printStackTrace();
             responseEntity = new ResponseEntity<>(new PageInfo<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseEntity;
+    }
+
+    /**
+     * 获取纺织品价格列表
+     *
+     * @param name 名称
+     * @param type 类型
+     * @param date 报价日期
+     * @return 纺织品价格列表
+     */
+    @ApiOperation(value = "获取纺织品价格列表", notes = "获取纺织品价格列表")
+    @GetMapping(value = "/list")
+    public ResponseEntity<List<WeavePrice>> getWeavePriceList(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) String date) {
+        logger.info("[getWeavePriceList], name: " + name + ", type: " + type + ", date: " + date);
+        ResponseEntity<List<WeavePrice>> responseEntity;
+        try {
+            Map<String, String> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
+            paramMap.put("name", name);
+            paramMap.put("type", type);
+            paramMap.put("date", date);
+            List<WeavePrice> weavePriceList = weavePriceService.getWeavePriceList(paramMap);
+            responseEntity = new ResponseEntity<>(weavePriceList, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseEntity = new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return responseEntity;
     }
