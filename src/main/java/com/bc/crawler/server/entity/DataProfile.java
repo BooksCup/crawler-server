@@ -9,7 +9,17 @@ import java.util.List;
  */
 public class DataProfile {
 
+    private HotExchange hotExchange;
+
     private List<WeavePrice> weavePriceList;
+
+    public HotExchange getHotExchange() {
+        return hotExchange;
+    }
+
+    public void setHotExchange(HotExchange hotExchange) {
+        this.hotExchange = hotExchange;
+    }
 
     public List<WeavePrice> getWeavePriceList() {
         return weavePriceList;
