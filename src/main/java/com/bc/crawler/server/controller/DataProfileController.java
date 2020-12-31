@@ -6,13 +6,13 @@ import com.bc.crawler.server.entity.HotExchange;
 import com.bc.crawler.server.entity.WeavePrice;
 import com.bc.crawler.server.service.HotExchangeService;
 import com.bc.crawler.server.service.WeavePriceService;
+import com.bc.crawler.server.utils.CommonUtil;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,9 +31,6 @@ import java.util.*;
 public class DataProfileController {
 
     private static final Logger logger = LoggerFactory.getLogger(WeavePriceController.class);
-    private static final String HTML_PREFIX_BEGIN = "<span style=\"";
-    private static final String HTML_PREFIX_END = "\">";
-    private static final String HTML_SUFFIX = "</span>";
 
     @Resource
     WeavePriceService weavePriceService;
@@ -65,7 +62,7 @@ public class DataProfileController {
             List<HotExchange> hotExchangeList = hotExchangeService.getHotExchangeList();
             if (!CollectionUtils.isEmpty(hotExchangeList)) {
                 HotExchange hotExchange = hotExchangeList.get(0);
-                hotExchange = handleHotExchange(hotExchange);
+                hotExchange = CommonUtil.handleHotExchange(hotExchange);
                 dataProfile.setHotExchange(hotExchange);
             }
 
@@ -77,64 +74,6 @@ public class DataProfileController {
         return responseEntity;
     }
 
-    /**
-     * 处理热门汇率
-     *
-     * @param hotExchange 热门汇率
-     * @return 处理后的热门汇率
-     */
-    private HotExchange handleHotExchange(HotExchange hotExchange) {
-        StringBuffer currentPriceHtmlBuffer = new StringBuffer();
-        StringBuffer changeHtmlBuffer = new StringBuffer();
-        StringBuffer todayPriceHtmlBuffer = new StringBuffer();
-        StringBuffer yesterdayPriceHtmlBuffer = new StringBuffer();
-        StringBuffer highestPriceHtmlBuffer = new StringBuffer();
-        StringBuffer lowestPriceHtmlBuffer = new StringBuffer();
-        if (StringUtils.isEmpty(hotExchange.getTitleCss())) {
-            currentPriceHtmlBuffer.append(hotExchange.getCurrentPrice());
-            changeHtmlBuffer.append(hotExchange.getChange());
-        } else {
-            currentPriceHtmlBuffer.append(HTML_PREFIX_BEGIN).append(hotExchange.getTitleCss()).append(HTML_PREFIX_END)
-                    .append(hotExchange.getCurrentPrice()).append(HTML_SUFFIX);
-            changeHtmlBuffer.append(HTML_PREFIX_BEGIN).append(hotExchange.getTitleCss()).append(HTML_PREFIX_END)
-                    .append(hotExchange.getChange()).append(HTML_SUFFIX);
-        }
 
-        if (StringUtils.isEmpty(hotExchange.getTodayPriceCss())) {
-            todayPriceHtmlBuffer.append(hotExchange.getTodayPrice());
-        } else {
-            todayPriceHtmlBuffer.append(HTML_PREFIX_BEGIN).append(hotExchange.getTodayPriceCss()).append(HTML_PREFIX_END)
-                    .append(hotExchange.getTodayPrice()).append(HTML_SUFFIX);
-        }
-
-        if (StringUtils.isEmpty(hotExchange.getYesterdayPriceCss())) {
-            yesterdayPriceHtmlBuffer.append(hotExchange.getYesterdayPrice());
-        } else {
-            yesterdayPriceHtmlBuffer.append(HTML_PREFIX_BEGIN).append(hotExchange.getYesterdayPriceCss()).append(HTML_PREFIX_END)
-                    .append(hotExchange.getYesterdayPrice()).append(HTML_SUFFIX);
-        }
-
-        if (StringUtils.isEmpty(hotExchange.getHighestPriceCss())) {
-            highestPriceHtmlBuffer.append(hotExchange.getHighestPrice());
-        } else {
-            highestPriceHtmlBuffer.append(HTML_PREFIX_BEGIN).append(hotExchange.getHighestPriceCss()).append(HTML_PREFIX_END)
-                    .append(hotExchange.getHighestPrice()).append(HTML_SUFFIX);
-        }
-
-        if (StringUtils.isEmpty(hotExchange.getLowestPriceCss())) {
-            lowestPriceHtmlBuffer.append(hotExchange.getLowestPrice());
-        } else {
-            lowestPriceHtmlBuffer.append(HTML_PREFIX_BEGIN).append(hotExchange.getLowestPriceCss()).append(HTML_PREFIX_END)
-                    .append(hotExchange.getLowestPrice()).append(HTML_SUFFIX);
-        }
-        hotExchange.setCurrentPriceHtml(currentPriceHtmlBuffer.toString());
-        hotExchange.setChangeHtml(changeHtmlBuffer.toString());
-        hotExchange.setCurrentPriceHtml(currentPriceHtmlBuffer.toString());
-        hotExchange.setTodayPriceHtml(todayPriceHtmlBuffer.toString());
-        hotExchange.setYesterdayPriceHtml(yesterdayPriceHtmlBuffer.toString());
-        hotExchange.setHighestPriceHtml(highestPriceHtmlBuffer.toString());
-        hotExchange.setLowestPriceHtml(lowestPriceHtmlBuffer.toString());
-        return hotExchange;
-    }
 
 }
