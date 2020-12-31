@@ -2,6 +2,7 @@ package com.bc.crawler.server.entity;
 
 /**
  * 热门汇率
+ *
  * @author zhou
  */
 public class HotExchange {
@@ -20,6 +21,13 @@ public class HotExchange {
     private String yesterdayPriceCss;
     private String highestPriceCss;
     private String lowestPriceCss;
+
+    private String currentPriceHtml;
+    private String changeHtml;
+    private String todayPriceHtml;
+    private String yesterdayPriceHtml;
+    private String highestPriceHtml;
+    private String lowestPriceHtml;
 
     public String getId() {
         return id;
@@ -131,6 +139,54 @@ public class HotExchange {
 
     public void setLowestPriceCss(String lowestPriceCss) {
         this.lowestPriceCss = lowestPriceCss;
+    }
+
+    public String getCurrentPriceHtml() {
+        return currentPriceHtml;
+    }
+
+    public void setCurrentPriceHtml(String currentPriceHtml) {
+        this.currentPriceHtml = currentPriceHtml;
+    }
+
+    public String getChangeHtml() {
+        return changeHtml;
+    }
+
+    public void setChangeHtml(String changeHtml) {
+        this.changeHtml = changeHtml;
+    }
+
+    public String getTodayPriceHtml() {
+        return todayPriceHtml;
+    }
+
+    public void setTodayPriceHtml(String todayPriceHtml) {
+        this.todayPriceHtml = todayPriceHtml;
+    }
+
+    public String getYesterdayPriceHtml() {
+        return yesterdayPriceHtml;
+    }
+
+    public void setYesterdayPriceHtml(String yesterdayPriceHtml) {
+        this.yesterdayPriceHtml = yesterdayPriceHtml;
+    }
+
+    public String getHighestPriceHtml() {
+        return highestPriceHtml;
+    }
+
+    public void setHighestPriceHtml(String highestPriceHtml) {
+        this.highestPriceHtml = highestPriceHtml;
+    }
+
+    public String getLowestPriceHtml() {
+        return lowestPriceHtml;
+    }
+
+    public void setLowestPriceHtml(String lowestPriceHtml) {
+        this.lowestPriceHtml = lowestPriceHtml;
     }
 
 }
