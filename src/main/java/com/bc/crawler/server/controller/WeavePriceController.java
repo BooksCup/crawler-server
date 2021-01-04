@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -108,7 +109,11 @@ public class WeavePriceController {
             Map<String, String> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
             paramMap.put("name", name);
             paramMap.put("type", type);
-            paramMap.put("date", date);
+            if (!StringUtils.isEmpty(date)) {
+                String lastWeavePriceDate = weavePriceService.getLastWeavePriceDate(paramMap);
+                paramMap.put("date", lastWeavePriceDate);
+            }
+
             List<WeavePrice> weavePriceList = weavePriceService.getWeavePriceList(paramMap);
             responseEntity = new ResponseEntity<>(weavePriceList, HttpStatus.OK);
         } catch (Exception e) {
