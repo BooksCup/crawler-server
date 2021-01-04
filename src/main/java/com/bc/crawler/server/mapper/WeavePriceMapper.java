@@ -26,4 +26,12 @@ public interface WeavePriceMapper {
      * @return 纺织品价格列表
      */
     List<WeavePrice> getWeavePriceList(Map<String, String> paramMap);
+
+    /**
+     * 获取最后一次交易日期
+     *
+     * @param paramMap 参数map
+     * @return 最后一次交易日期
+     */
+    String getLastWeavePriceDate(Map<String, String> paramMap);
 }

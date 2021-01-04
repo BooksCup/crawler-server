@@ -55,6 +55,8 @@ public class DataProfileController {
             Map<String, String> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
             paramMap.put("type", "化纤");
             paramMap.put("date", simpleDateFormat.format(new Date()));
+            String lastWeavePriceDate = weavePriceService.getLastWeavePriceDate(paramMap);
+            paramMap.put("date", lastWeavePriceDate);
             List<WeavePrice> weavePriceList = weavePriceService.getWeavePriceList(paramMap);
 
             dataProfile.setWeavePriceList(weavePriceList);
@@ -74,7 +76,5 @@ public class DataProfileController {
         }
         return responseEntity;
     }
-
-
 
 }

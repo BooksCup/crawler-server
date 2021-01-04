@@ -58,4 +58,15 @@ public class WeavePriceServiceImpl implements WeavePriceService {
         return weavePriceMapper.getWeavePriceList(paramMap);
     }
 
+    /**
+     * 获取最后一次交易日期
+     *
+     * @param paramMap 参数map
+     * @return 最后一次交易日期
+     */
+    @Override
+    public String getLastWeavePriceDate(Map<String, String> paramMap) {
+        return weavePriceMapper.getLastWeavePriceDate(paramMap);
+    }
+
 }

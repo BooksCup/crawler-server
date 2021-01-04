@@ -32,4 +32,15 @@
         </if>
         order by price_date desc
     </select>
+
+    <select id="getLastWeavePriceDate" resultType="String" parameterType="map">
+        select price_date
+        from t_weave_price
+        where 1 = 1
+        <if test="type != null and type != ''">
+            and price_type = #{type}
+        </if>
+        order by price_date desc
+        limit 1
+    </select>
 </mapper>
