@@ -4,6 +4,7 @@ import com.bc.crawler.server.entity.HotExchange;
 import com.bc.crawler.server.enums.CurrencyTitleInfo;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -16,6 +17,10 @@ public class CommonUtil {
     private static final String HTML_PREFIX_BEGIN = "<span style=\"";
     private static final String HTML_PREFIX_END = "\">";
     private static final String HTML_SUFFIX = "</span>";
+
+    private static final String RISE_PREFIX = "<span style='color:#f54545'>";
+    private static final String FALL_PREFIX = "<span style='color:#0f990f'>";
+    private static final String RISE_FALL_SUFFIX = "</span>";
 
     /**
      * 生成主键
@@ -83,6 +88,31 @@ public class CommonUtil {
         hotExchange.setYesterdayPriceHtml(yesterdayPriceHtmlBuffer.toString());
         hotExchange.setHighestPriceHtml(highestPriceHtmlBuffer.toString());
         hotExchange.setLowestPriceHtml(lowestPriceHtmlBuffer.toString());
+        hotExchange.setTitle(CurrencyTitleInfo.getCurrencyTitleByCurrency(hotExchange.getCurrencyName()));
+        return hotExchange;
+    }
+
+    /**
+     * 处理热门汇率(v2)
+     *
+     * @param hotExchange 热门汇率
+     * @return 处理后的热门汇率
+     */
+    public static HotExchange handleHotExchangeV2(HotExchange hotExchange) {
+        BigDecimal change = new BigDecimal(hotExchange.getChange1());
+        hotExchange.setChange(hotExchange.getChange1() + " (" + hotExchange.getChange2() + "%)");
+        if (change.doubleValue() > 0) {
+            // 涨
+            hotExchange.setCurrentPrice(RISE_PREFIX + hotExchange.getCurrentPrice() + RISE_FALL_SUFFIX);
+            hotExchange.setChange(RISE_PREFIX + hotExchange.getChange1() +
+                    " (" + hotExchange.getChange2() + "%)" + RISE_FALL_SUFFIX);
+        } else if (change.doubleValue() < 0) {
+            // 跌
+            hotExchange.setCurrentPrice(FALL_PREFIX + hotExchange.getCurrentPrice() + RISE_FALL_SUFFIX);
+            hotExchange.setChange(FALL_PREFIX + hotExchange.getChange1() +
+                    " (" + hotExchange.getChange2() + "%)" + RISE_FALL_SUFFIX);
+        }
+
         hotExchange.setTitle(CurrencyTitleInfo.getCurrencyTitleByCurrency(hotExchange.getCurrencyName()));
         return hotExchange;
     }

@@ -67,4 +67,15 @@ public class HotExchangeServiceImpl implements HotExchangeService {
         hotExchangeMapper.addHotExchange(hotExchange);
     }
 
+    /**
+     * 获取热门汇率列表(v2)
+     *
+     * @param paramMap 参数map
+     * @return 热门汇率列表
+     */
+    @Override
+    public List<HotExchange> getHotExchangeListV2(Map<String, String> paramMap) {
+        return hotExchangeMapper.getHotExchangeListV2(paramMap);
+    }
+
 }

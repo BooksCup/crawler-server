@@ -45,6 +45,7 @@ public class DataProfileController {
      */
     @ApiOperation(value = "获取数据信息", notes = "获取数据信息")
     @GetMapping(value = "")
+    @Deprecated
     public ResponseEntity<DataProfile> getDataProfile() {
         logger.info("[getDateProfile]");
         ResponseEntity<DataProfile> responseEntity;
@@ -66,6 +67,45 @@ public class DataProfileController {
             if (!CollectionUtils.isEmpty(hotExchangeList)) {
                 HotExchange hotExchange = hotExchangeList.get(0);
                 hotExchange = CommonUtil.handleHotExchange(hotExchange);
+                dataProfile.setHotExchange(hotExchange);
+            }
+
+            responseEntity = new ResponseEntity<>(dataProfile, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseEntity = new ResponseEntity<>(new DataProfile(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseEntity;
+    }
+
+    /**
+     * 获取数据信息(v2)
+     *
+     * @return 数据信息
+     */
+    @ApiOperation(value = "获取数据信息", notes = "获取数据信息")
+    @GetMapping(value = "/v2")
+    public ResponseEntity<DataProfile> getDataProfileV2() {
+        logger.info("[getDataProfileV2]");
+        ResponseEntity<DataProfile> responseEntity;
+        DataProfile dataProfile = new DataProfile();
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            Map<String, String> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
+            paramMap.put("type", "化纤");
+            paramMap.put("date", simpleDateFormat.format(new Date()));
+            String lastWeavePriceDate = weavePriceService.getLastWeavePriceDate(paramMap);
+            paramMap.put("date", lastWeavePriceDate);
+            List<WeavePrice> weavePriceList = weavePriceService.getWeavePriceList(paramMap);
+
+            dataProfile.setWeavePriceList(weavePriceList);
+
+            paramMap.clear();
+            List<HotExchange> hotExchangeList = hotExchangeService.getHotExchangeListV2(paramMap);
+            if (!CollectionUtils.isEmpty(hotExchangeList)) {
+                HotExchange hotExchange = hotExchangeList.get(0);
+                hotExchange = CommonUtil.handleHotExchangeV2(hotExchange);
                 dataProfile.setHotExchange(hotExchange);
             }
 

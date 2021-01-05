@@ -34,4 +34,12 @@ public interface HotExchangeMapper {
      */
     void addHotExchange(HotExchange hotExchange);
 
+    /**
+     * 获取热门汇率列表(v2)
+     *
+     * @param paramMap 参数map
+     * @return 热门汇率列表
+     */
+    List<HotExchange> getHotExchangeListV2(Map<String, String> paramMap);
+
 }
