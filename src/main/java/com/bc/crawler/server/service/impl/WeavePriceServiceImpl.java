@@ -41,7 +41,7 @@ public class WeavePriceServiceImpl implements WeavePriceService {
      * @return 纺织品价格分页信息
      */
     @Override
-    public PageInfo<WeavePrice> getWeavePricePageInfo(int pageNum, int pageSize, Map<String, String> paramMap) {
+    public PageInfo<WeavePrice> getWeavePricePageInfo(int pageNum, int pageSize, Map<String, Object> paramMap) {
         PageHelper.startPage(pageNum, pageSize);
         List<WeavePrice> weavePriceList = weavePriceMapper.getWeavePriceList(paramMap);
         return new PageInfo<>(weavePriceList);
@@ -54,8 +54,19 @@ public class WeavePriceServiceImpl implements WeavePriceService {
      * @return 纺织品价格列表
      */
     @Override
-    public List<WeavePrice> getWeavePriceList(Map<String, String> paramMap) {
+    public List<WeavePrice> getWeavePriceList(Map<String, Object> paramMap) {
         return weavePriceMapper.getWeavePriceList(paramMap);
+    }
+
+    /**
+     * 获取纺织品价格列表(多类型)
+     *
+     * @param paramMap 参数map
+     * @return 纺织品价格列表
+     */
+    @Override
+    public List<WeavePrice> getWeavePriceListByMultipleType(Map<String, Object> paramMap) {
+        return weavePriceMapper.getWeavePriceListByMultipleType(paramMap);
     }
 
     /**
@@ -65,7 +76,7 @@ public class WeavePriceServiceImpl implements WeavePriceService {
      * @return 最后一次交易日期
      */
     @Override
-    public String getLastWeavePriceDate(Map<String, String> paramMap) {
+    public String getLastWeavePriceDate(Map<String, Object> paramMap) {
         return weavePriceMapper.getLastWeavePriceDate(paramMap);
     }
 

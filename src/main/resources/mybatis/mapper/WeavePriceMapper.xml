@@ -33,6 +33,26 @@
         order by price_date desc
     </select>
 
+    <select id="getWeavePriceListByMultipleType" resultMap="weavePrice" parameterType="map">
+        select *
+        from t_weave_price
+        where 1 = 1
+        <if test="name != null and name != ''">
+            and price_name like "%"#{name}"%"
+        </if>
+        <if test="typeList != null and typeList.size() > 0">
+            and price_type in
+            <foreach collection="typeList" index="" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="date != null and date != ''">
+            and price_date = #{date}
+        </if>
+        order by price_date desc
+    </select>
+
+
     <select id="getLastWeavePriceDate" resultType="String" parameterType="map">
         select price_date
         from t_weave_price

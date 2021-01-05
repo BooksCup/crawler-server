@@ -39,7 +39,7 @@ public class HotExchangeServiceImpl implements HotExchangeService {
      * @return 热门汇率列表
      */
     @Override
-    public List<HotExchange> getHotExchangeList(Map<String, String> paramMap) {
+    public List<HotExchange> getHotExchangeList(Map<String, Object> paramMap) {
         return hotExchangeMapper.getHotExchangeList(paramMap);
     }
 
@@ -51,7 +51,7 @@ public class HotExchangeServiceImpl implements HotExchangeService {
      * @return 热门汇率分页信息
      */
     @Override
-    public PageInfo<HotExchange> getHotExchangeList(int pageNum, int pageSize, Map<String, String> paramMap) {
+    public PageInfo<HotExchange> getHotExchangeList(int pageNum, int pageSize, Map<String, Object> paramMap) {
         PageHelper.startPage(pageNum, pageSize);
         List<HotExchange> hotExchangeList = hotExchangeMapper.getHotExchangeList(paramMap);
         return new PageInfo<>(hotExchangeList);
@@ -74,7 +74,7 @@ public class HotExchangeServiceImpl implements HotExchangeService {
      * @return 热门汇率列表
      */
     @Override
-    public List<HotExchange> getHotExchangeListV2(Map<String, String> paramMap) {
+    public List<HotExchange> getHotExchangeListV2(Map<String, Object> paramMap) {
         return hotExchangeMapper.getHotExchangeListV2(paramMap);
     }
 

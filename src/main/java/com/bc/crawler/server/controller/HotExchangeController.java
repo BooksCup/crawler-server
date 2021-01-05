@@ -69,7 +69,7 @@ public class HotExchangeController {
         logger.info("[getHotExchangeList], page: " + page + ", limit: " + limit);
         ResponseEntity<PageInfo<HotExchange>> responseEntity;
         try {
-            Map<String, String> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
+            Map<String, Object> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
             paramMap.put("currencyName", currencyName);
 
             PageInfo<HotExchange> hotExchangePageInfo = hotExchangeService.getHotExchangeList(page, limit, paramMap);

@@ -25,7 +25,7 @@ public interface HotExchangeMapper {
      * @param paramMap 参数map
      * @return 热门汇率列表
      */
-    List<HotExchange> getHotExchangeList(Map<String, String> paramMap);
+    List<HotExchange> getHotExchangeList(Map<String, Object> paramMap);
 
     /**
      * 新增热门汇率
@@ -40,6 +40,6 @@ public interface HotExchangeMapper {
      * @param paramMap 参数map
      * @return 热门汇率列表
      */
-    List<HotExchange> getHotExchangeListV2(Map<String, String> paramMap);
+    List<HotExchange> getHotExchangeListV2(Map<String, Object> paramMap);
 
 }

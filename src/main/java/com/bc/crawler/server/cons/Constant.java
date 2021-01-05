@@ -36,4 +36,13 @@ public class Constant {
      */
     public static final String SHELL_EXECUTE_STATUS_FAIL = "1";
 
+    /**
+     * 化纤
+     */
+    public static final String WEAVE_PRICE_TYPE_FIBER = "化纤";
+
+    /**
+     * 纱线
+     */
+    public static final String WEAVE_PRICE_TYPE_YARN = "纱线";
 }

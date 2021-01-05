@@ -28,7 +28,7 @@ public interface WeavePriceService {
      * @param paramMap 参数map
      * @return 纺织品价格分页信息
      */
-    PageInfo<WeavePrice> getWeavePricePageInfo(int pageNum, int pageSize, Map<String, String> paramMap);
+    PageInfo<WeavePrice> getWeavePricePageInfo(int pageNum, int pageSize, Map<String, Object> paramMap);
 
     /**
      * 获取纺织品价格列表
@@ -36,7 +36,15 @@ public interface WeavePriceService {
      * @param paramMap 参数map
      * @return 纺织品价格列表
      */
-    List<WeavePrice> getWeavePriceList(Map<String, String> paramMap);
+    List<WeavePrice> getWeavePriceList(Map<String, Object> paramMap);
+
+    /**
+     * 获取纺织品价格列表(多类型)
+     *
+     * @param paramMap 参数map
+     * @return 纺织品价格列表
+     */
+    List<WeavePrice> getWeavePriceListByMultipleType(Map<String, Object> paramMap);
 
     /**
      * 获取最后一次交易日期
@@ -44,6 +52,6 @@ public interface WeavePriceService {
      * @param paramMap 参数map
      * @return 最后一次交易日期
      */
-    String getLastWeavePriceDate(Map<String, String> paramMap);
+    String getLastWeavePriceDate(Map<String, Object> paramMap);
 
 }

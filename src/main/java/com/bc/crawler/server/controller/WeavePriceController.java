@@ -76,7 +76,7 @@ public class WeavePriceController {
                 + ", type: " + type + ", date: " + date);
         ResponseEntity<PageInfo<WeavePrice>> responseEntity;
         try {
-            Map<String, String> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
+            Map<String, Object> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
             paramMap.put("name", name);
             paramMap.put("type", type);
             paramMap.put("date", date);
@@ -106,15 +106,21 @@ public class WeavePriceController {
         logger.info("[getWeavePriceList], name: " + name + ", type: " + type + ", date: " + date);
         ResponseEntity<List<WeavePrice>> responseEntity;
         try {
-            Map<String, String> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
+            Map<String, Object> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
             paramMap.put("name", name);
-            paramMap.put("type", type);
+            if (!StringUtils.isEmpty(type)) {
+                List<String> typeList = new ArrayList<>();
+                typeList.add(Constant.WEAVE_PRICE_TYPE_FIBER);
+                typeList.add(Constant.WEAVE_PRICE_TYPE_YARN);
+                paramMap.put("typeList", typeList);
+            }
+
             if (!StringUtils.isEmpty(date)) {
                 String lastWeavePriceDate = weavePriceService.getLastWeavePriceDate(paramMap);
                 paramMap.put("date", lastWeavePriceDate);
             }
 
-            List<WeavePrice> weavePriceList = weavePriceService.getWeavePriceList(paramMap);
+            List<WeavePrice> weavePriceList = weavePriceService.getWeavePriceListByMultipleType(paramMap);
             responseEntity = new ResponseEntity<>(weavePriceList, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

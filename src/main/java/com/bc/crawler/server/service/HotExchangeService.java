@@ -27,7 +27,7 @@ public interface HotExchangeService {
      * @param paramMap 参数map
      * @return 热门汇率列表
      */
-    List<HotExchange> getHotExchangeList(Map<String, String> paramMap);
+    List<HotExchange> getHotExchangeList(Map<String, Object> paramMap);
 
     /**
      * 获取热门汇率分页信息
@@ -36,7 +36,7 @@ public interface HotExchangeService {
      * @param pageSize 分页大小
      * @return 热门汇率分页信息
      */
-    PageInfo<HotExchange> getHotExchangeList(int pageNum, int pageSize, Map<String, String> paramMap);
+    PageInfo<HotExchange> getHotExchangeList(int pageNum, int pageSize, Map<String, Object> paramMap);
 
     /**
      * 新增热门汇率
@@ -51,6 +51,6 @@ public interface HotExchangeService {
      * @param paramMap 参数map
      * @return 热门汇率列表
      */
-    List<HotExchange> getHotExchangeListV2(Map<String, String> paramMap);
+    List<HotExchange> getHotExchangeListV2(Map<String, Object> paramMap);
 
 }
