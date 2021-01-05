@@ -34,6 +34,7 @@ public class HotExchangeServiceImpl implements HotExchangeService {
 
     /**
      * 获取热门汇率列表
+     *
      * @param paramMap 参数map
      * @return 热门汇率列表
      */
@@ -54,6 +55,16 @@ public class HotExchangeServiceImpl implements HotExchangeService {
         PageHelper.startPage(pageNum, pageSize);
         List<HotExchange> hotExchangeList = hotExchangeMapper.getHotExchangeList(paramMap);
         return new PageInfo<>(hotExchangeList);
+    }
+
+    /**
+     * 新增热门汇率
+     *
+     * @param hotExchange 热门汇率
+     */
+    @Override
+    public void addHotExchange(HotExchange hotExchange) {
+        hotExchangeMapper.addHotExchange(hotExchange);
     }
 
 }

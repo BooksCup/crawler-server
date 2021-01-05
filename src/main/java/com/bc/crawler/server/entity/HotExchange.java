@@ -16,7 +16,21 @@ public class HotExchange {
     private String yesterdayPrice;
     private String highestPrice;
     private String lowestPrice;
+
+    /**
+     * 波幅
+     */
+    private String change1;
+
+    /**
+     * 振幅
+     */
+    private String change2;
+
+
     private String createTime;
+
+
     private String titleCss;
     private String todayPriceCss;
     private String yesterdayPriceCss;
@@ -100,6 +114,22 @@ public class HotExchange {
 
     public void setLowestPrice(String lowestPrice) {
         this.lowestPrice = lowestPrice;
+    }
+
+    public String getChange1() {
+        return change1;
+    }
+
+    public void setChange1(String change1) {
+        this.change1 = change1;
+    }
+
+    public String getChange2() {
+        return change2;
+    }
+
+    public void setChange2(String change2) {
+        this.change2 = change2;
     }
 
     public String getCreateTime() {

@@ -36,7 +36,6 @@ public class DynamicScheduleTask implements SchedulingConfigurer {
     @Resource
     private CrawlerShellService crawlerShellService;
 
-
     @Override
     public void configureTasks(ScheduledTaskRegistrar scheduledTaskRegistrar) {
         List<Cron> cronList = cronService.getCronList();
@@ -61,7 +60,6 @@ public class DynamicScheduleTask implements SchedulingConfigurer {
 
             scheduledTaskRegistrar.addTriggerTask(task, trigger);
         }
-
 
     }
 }

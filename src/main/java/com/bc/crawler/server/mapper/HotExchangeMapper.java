@@ -27,4 +27,11 @@ public interface HotExchangeMapper {
      */
     List<HotExchange> getHotExchangeList(Map<String, String> paramMap);
 
+    /**
+     * 新增热门汇率
+     *
+     * @param hotExchange 热门汇率
+     */
+    void addHotExchange(HotExchange hotExchange);
+
 }

@@ -19,6 +19,19 @@
         <result column="lowest_price_css" property="lowestPriceCss" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap id="hotExchangeV2" type="com.bc.crawler.server.entity.HotExchange">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="currency_name" property="currencyName" jdbcType="VARCHAR"/>
+        <result column="current_price" property="currentPrice" jdbcType="VARCHAR"/>
+        <result column="today_price" property="todayPrice" jdbcType="VARCHAR"/>
+        <result column="yesterday_price" property="yesterdayPrice" jdbcType="VARCHAR"/>
+        <result column="highest_price" property="highestPrice" jdbcType="VARCHAR"/>
+        <result column="lowest_price" property="lowestPrice" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="change1" property="change1" jdbcType="VARCHAR"/>
+        <result column="change2" property="change2" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <select id="getCurrencyList" resultType="String">
         select distinct currency_name
         from t_hot_exchange
@@ -27,6 +40,45 @@
     <select id="getHotExchangeList" resultMap="hotExchange" parameterType="map">
         select *
         from t_hot_exchange
+        where 1 = 1
+        <if test="currencyName != null and currencyName != ''">
+            and currency_name = #{currencyName}
+        </if>
+        order by create_time desc
+    </select>
+
+    <insert id="addHotExchange" parameterType="com.bc.crawler.server.entity.HotExchange">
+        insert into t_hot_exchange_sina
+        (
+        id,
+        currency_name,
+        current_price,
+        today_price,
+        yesterday_price,
+        highest_price,
+        lowest_price,
+        change1,
+        change2,
+        create_time
+        )
+        values
+        (
+        #{id},
+        #{currencyName},
+        #{currentPrice},
+        #{todayPrice},
+        #{yesterdayPrice},
+        #{highestPrice},
+        #{lowestPrice},
+        #{change1},
+        #{change2},
+        #{createTime}
+        )
+    </insert>
+
+    <select id="getHotExchangeListV2" resultMap="hotExchangeV2" parameterType="map">
+        select *
+        from t_hot_exchange_sina
         where 1 = 1
         <if test="currencyName != null and currencyName != ''">
             and currency_name = #{currencyName}
