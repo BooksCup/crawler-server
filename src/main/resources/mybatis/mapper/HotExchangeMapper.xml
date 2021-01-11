@@ -84,6 +84,7 @@
             and currency_name = #{currencyName}
         </if>
         order by create_time desc
+        limit 1
     </select>
 
 </mapper>
